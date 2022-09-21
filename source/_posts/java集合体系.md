@@ -6,6 +6,19 @@ index_img: /img/article1.jpg
 banner_img: /img/post_banner.jpg
 ---
 
+<div align="center">
+    <a title="Github Total Stars" target="_blank" href="https://i-xiaoxin.github.io">
+        <img src="https://img.shields.io/github/stars/i-xiaoxin/i-xiaoxin.github.io?affiliations=OWNER&color=success&logo=github&style=plastic" />
+    </a>
+    <a title="Github Followers" target="_blank" href="https://i-xiaoxin.github.io">
+        <img src="https://img.shields.io/github/followers/i-xiaoxin?color=success&logo=github&style=plastic" />
+    </a>
+    <a title="Target " target="_blank" href="https://i-xiaoxin.github.io">
+        <img src="https://img.shields.io/github/languages/top/i-xiaoxin/i-xiaoxin.github.io?color=success&label=java&logo=github&style=plastic" />
+    </a>
+</div>
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Ma+Shan+Zheng&pause=1000&color=17D8BF&width=435&lines= 🚀%E5%AE%9D%E5%89%91%E9%94%8B%E4%BB%8E%E7%A3%A8%E7%A0%BA%E5%87%BA%EF%BC%8C%E6%A2%85%E8%8A%B1%E9%A6%99%E8%87%AA%E8%8B%A6%E5%AF%92%E6%9D%A5)](https://git.io/typing-svg)
+
 ### 数组存在问题:
 
 - 数组长度固定

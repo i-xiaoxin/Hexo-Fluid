@@ -12,6 +12,18 @@ banner_img: /img/post_banner.jpg
 
 # Redis基础知识
 
+<div align="center">
+     <a title="Github Total Stars" target="_blank" href="https://i-xiaoxin.github.io">
+        <img src="https://img.shields.io/github/stars/i-xiaoxin/i-xiaoxin.github.io?affiliations=OWNER&color=success&logo=github&style=plastic" />
+    </a>
+    <a title="Github Followers" target="_blank" href="https://i-xiaoxin.github.io">
+        <img src="https://img.shields.io/github/followers/i-xiaoxin?color=success&logo=github&style=plastic" />
+    </a>
+    <a title="Target " target="_blank" href="https://i-xiaoxin.github.io">
+        <img src="https://img.shields.io/github/languages/top/i-xiaoxin/i-xiaoxin.github.io?color=success&label=java&logo=github&style=plastic" />
+    </a>
+</div>
+
 ## 1. Redis 简介
 
 ◆ Redis 简介（NoSQL概念、Redis概念）
@@ -157,7 +169,7 @@ NoSQL：即 Not-Only SQL（ 泛指非关系型的数据库），作为关系型�
 
 #### 1.3.1 Redis 的下载与安装
 
-本课程所示，均基于Center OS7安装Redis。
+学习环境均基于Center OS7安装Redis。
 
 （1)下载Redis
 
@@ -398,16 +410,6 @@ exit
 Ctrl+C
 ```
 
-#### 1.6.4  redis入门总结
-
-到这里，Redis 入门的相关知识，我们就全部学习完了，再来回顾一下，这个部分我们主要讲解了哪些内容呢？
-
-首先，我们对Redis进行了一个简单介绍，包括NoSQL的概念、Redis的概念等。
-
-然后，我们介绍了Redis 的下载与安装。包括下载与安装、服务器与客户端启动、以及相关配置文件（3类）。
-
-最后，我们介绍了Redis 的基本操作。包括数据读写、退出与帮助信息获取。
-
 ## 2. 数据类型
 
 在这个部分，我们将学习一共要学习三大块内容，首先需要了解一下数据类型，接下来将针对着我们要学习的数据类型进行逐一的讲解，如string、hash、list、set等，最后我们通过一个案例来总结前面的数据类型的使用场景。
@@ -416,15 +418,15 @@ Ctrl+C
 
 #### 2.1.1  业务数据的特殊性
 
-在讲解数据类型之前，我们得先思考一个问题，数据类型既然是用来描述数据的存储格式的，如果你不知道哪些数据未来会进入到我们来的redis中，那么对应的数据类型的选择，你就会出现问题，我们一块来看一下：
+在了解数据类型之前，我们得先思考一个问题，数据类型既然是用来描述数据的存储格式的，如果你不知道哪些数据未来会进入到我们来的redis中，那么对应的数据类型的选择，你就会出现问题，如下：
 
 （1）原始业务功能设计
 
-秒杀。他这个里边数据变化速度特别的快，访问量也特别的高，用户大量涌入以后都会针对着一部分数据进行操作，这一类要记住。
+**秒杀**他这个里边数据变化速度特别的快，访问量也特别的高，用户大量涌入以后都会针对着一部分数据进行操作，这一类要记住。
 
-618活动。对于我们京东的618活动、以及天猫的双11活动，相信大家不用说都知道这些数据一定要进去，因为他们的访问频度实在太高了。
+**618活动**对于我们京东的618活动、以及天猫的双11活动，相信大家不用说都知道这些数据一定要进去，因为他们的访问频度实在太高了。
 
-排队购票。我们12306的票务信息。这些信息在原始设计的时候，他们就注定了要进redis。
+**排队购票**我们12306的票务信息。这些信息在原始设计的时候，他们就注定了要进redis。
 
 （2）运营平台监控到的突发高频访问数据
 
