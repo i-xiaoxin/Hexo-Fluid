@@ -5,6 +5,10 @@ tags: other
 index_img: /img/example.jpg
 banner_img: /img/post_banner.jpg
 sticky: 100
+categories:
+- java
+- redis
+- life
 ---
 
 ### ❤️使用指南
@@ -20,6 +24,8 @@ sticky: 100
 > index_img: /img/example.jpg
 > banner_img: /img/post_banner.jpg
 > sticky: 100
+>
+> contegories：目录
 
 字段`tags`设置文章归属标签；自定义摘要可以使用字段`excerpt`进行设置，手动优先级高于自动设置；`sticky`属性影响文章的排序，数值越大，该文章越靠前，达到类似于置顶的效果，其他未设置的文章依然按默认排序；`index_img` 属性决定了文章在首页显示的封面图，置空时选择默认；`banner_img` 属性文章页配置顶部大图
 

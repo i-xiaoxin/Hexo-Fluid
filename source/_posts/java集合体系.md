@@ -4,6 +4,10 @@ date: 2022-09-21 18:12:02
 tags: java
 index_img: /img/article1.jpg
 banner_img: /img/post_banner.jpg
+categories:
+- java
+- redis
+- life
 ---
 
 <div align="center">
