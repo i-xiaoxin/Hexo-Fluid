@@ -6,9 +6,7 @@ index_img: /img/example.jpg
 banner_img: /img/post_banner.jpg
 sticky: 100
 categories:
-- java
-- redis
-- life
+- hexo
 ---
 
 ### ❤️使用指南

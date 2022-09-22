@@ -5,9 +5,8 @@ tags: Redis
 index_img: /img/article2.jpg
 banner_img: /img/post_banner.jpg
 categories:
-- java
 - redis
-- life
+
 ---
 
 

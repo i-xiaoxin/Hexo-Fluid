@@ -6,8 +6,7 @@ index_img: /img/article1.jpg
 banner_img: /img/post_banner.jpg
 categories:
 - java
-- redis
-- life
+
 ---
 
 <div align="center">
