@@ -1648,7 +1648,7 @@ AOF的主要作用是解决了数据持久化的实时性，目前已经是Redis
 
 **AOF写数据过程**
 
-![](D:\储存空间\heima\02_阶段二 JavaWeb\阶段二-课件-笔记-资料\12.Redis\day01\讲义-md版本\img\1.png)
+![](https://raw.githubusercontent.com/i-xiaoxin/image/master/20220924140622.png)
 
 **启动AOF相关配置**
 
@@ -1766,7 +1766,7 @@ aof_base_size
 
 #### 5.3.4 AOF工作流程及重写流程
 
-![](https://raw.githubusercontent.com/i-xiaoxin/image/master/AOF 工作流程.png)
+![](https://raw.githubusercontent.com/i-xiaoxin/image/master/20220924140822.png)
 
 
 
