@@ -5,7 +5,7 @@ tags:
 - java
 - cron
 - spring
-index_img: /img/article4.jpg
+index_img: /img/article5.jpg
 banner_img: /img/post_banner.jpg
 categories:
 - java
@@ -16,11 +16,11 @@ categories:
 <p class="note note-success">
     <b>cron</b>是基于时间的任务管理系统，通过cron在固定时间、日期、间隔下，运行定期任务，如：定期下载文件和邮件。cron该词来源于希腊语chronos（χρόνος），原意是时间。
 </p>
-通常，**任务时间表**（crontab）文件储存的指令被crond[守护进程](https://zh.wikipedia.org/wiki/守护进程)激活，守护进程在后台运行，并每一分钟检查是否有定期的作业需要执行。这类作业一般称为**cron jobs**。
+通常，任务时间表（crontab）文件储存的指令被crond（守护进程）激活，守护进程在后台运行，并每一分钟检查是否有定期的作业需要执行。这类作业一般称为cron jobs。
 
 ### cron表达式格式
 
-```
+```sql
 ┌───────────── 秒 second (0 - 59)
 │ ┌───────────── 分 minute (0 - 59)
 │ │ ┌───────────── 时 hour (0 - 23)
@@ -29,7 +29,7 @@ categories:
 │ │ │ │ │ ┌─────────────周 day of the week (0 - 6 or Sun/Sunday - Sat/Saturday)
 │ │ │ │ │ │ ┌─────────────年（一般省略，用不上）
 │ │ │ │ │ │ │
-*  *  *  *  *  *  * 
+* * * * * * * 
 ```
 
 ### cron表达式字符含义
