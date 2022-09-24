@@ -350,7 +350,7 @@ navbar:
     - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill" }
     - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
     - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
-    #- { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
+    - { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
 
 # 搜索功能，基于 hexo-generator-search 插件，若已安装其他搜索插件请关闭此功能，以避免生成多余的索引文件
 # Search feature, based on hexo-generator-search. If you have installed other search plugins, please disable this feature to avoid generating redundant index files
@@ -956,8 +956,8 @@ about:
   icons:
     - { class: "iconfont icon-github-fill", link: "https://github.com/i-xiaoxin", tip: "GitHub" }
     - { class: "iconfont icon-bilibili-fill", link: "https://bilibili.com", tip: "bilibili" }
-    - { class: "iconfont icon-wechat-fill", qrcode: "/img/favicon.png" }
-    - { class: "iconfont icon-qq-fill", qrcode: "/img/favicon.png" }
+    - { class: "iconfont icon-wechat-fill", qrcode: "/img/favicon.png", tip: "wechat" }
+    - { class: "iconfont icon-qq-fill", link: "https://qq.com", tip: "773836867" }
 
 #---------------------------
 # 自定义页
@@ -992,28 +992,46 @@ page404:
 #---------------------------
 links:
   enable: true
-  banner_img: /img/default.png
+  banner_img: /img/background2.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
   # 友链的成员项
   # Member item of page
   items:
     - {
-      title: "Fluid Blog",
-      intro: "主题博客",
-      link: "https://hexo.fluid-dev.com/",
+      title: "momoyu",
+      intro: "摸摸鱼热榜",
+      link: "https://momoyu.cc/",
       avatar: "/img/favicon.png"
     }
     - {
-      title: "Fluid Docs",
-      intro: "主题使用指南",
-      link: "https://hexo.fluid-dev.com/docs/",
+      title: "GitHub中文社区",
+      intro: "优质开源项目",
+      link: "https://www.githubs.cn/",
       avatar: "/img/favicon.png"
     }
     - {
-      title: "Fluid Repo",
-      intro: "主题 GitHub 仓库",
-      link: "https://github.com/fluid-dev/hexo-theme-fluid",
+      title: "pdai tech",
+      intro: "Java 全栈知识体系",
+      link: "https://pdai.tech/",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "getemoji",
+      intro: "获取emoji",
+      link: "https://getemoji.com/",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "程序导航",
+      intro: "不知道放什么，先放这些",
+      link: "http://www.cxy521.com/",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "Readme Typing SVG",
+      intro: "Readme Typing SVG",
+      link: "https://readme-typing-svg.demolab.com/demo/",
       avatar: "/img/favicon.png"
     }
 
