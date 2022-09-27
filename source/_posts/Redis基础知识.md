@@ -1,6 +1,6 @@
 ---
 title: Redis基础知识
-date: 2022-09-21 18:12:02
+date: 2022-09-26 18:12:02
 tags: Redis
 index_img: /img/article2.jpg
 banner_img: /img/post_banner.jpg
