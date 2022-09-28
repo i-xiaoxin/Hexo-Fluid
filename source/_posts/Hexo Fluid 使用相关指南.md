@@ -2,11 +2,12 @@
 title: Hexo Fluid 使用相关指南
 date: 2022-09-21 17:04:34
 tags: other
-index_img: /img/example.jpg
+index_img: https://raw.githubusercontent.com/i-xiaoxin/image/master/wallhaven-l3qrxq.jpg
 banner_img: /img/post_banner.jpg
 sticky: 100
 categories:
 - hexo
+comment: waline
 ---
 
 ### ❤️使用指南
@@ -100,6 +101,15 @@ primary default info success warning danger
 <a class="btn" href="url" title="title">text</a>
 ```
 
-url：跳转链接
-text：显示的文字
-title：鼠标悬停时显示的文字（可选）
+
+
+
+<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
+
+  <div id="waline"></div>
+  <script>
+    Waline({
+      el: '#waline',
+      serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
+    });
+  </script>

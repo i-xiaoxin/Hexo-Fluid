@@ -2,7 +2,7 @@
 title: about
 date: 2022-09-21 16:13:35
 layout: about
-
+comment: 'waline'
 ---
 
 <h3 align="center">Hi 👋, I'm xiaoxinlore 📕</h3>
@@ -109,3 +109,12 @@ layout: about
     <img height="175px" src="https://github-readme-stats.vercel.app/api?username=i-xiaoxin&count_private=true&show_icons=true"/>
 </div>
 
+<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
+
+  <div id="waline"></div>
+  <script>
+    Waline({
+      el: '#waline',
+      serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
+    });
+  </script>
