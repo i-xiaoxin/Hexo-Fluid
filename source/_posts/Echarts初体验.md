@@ -153,3 +153,5 @@ comment: waline
 ## 参考
 [^1]: Echarts示例
 [^2]: Echarts-Github
+
+<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>

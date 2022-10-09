@@ -488,3 +488,8 @@ spring:
 3.浏览器访问：http://127.0.0.1/config/info
 
 ![image-20221009213256584](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009213256584.png)
+
+
+
+
+<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
