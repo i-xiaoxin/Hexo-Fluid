@@ -92,4 +92,399 @@ cd /usr/local/nacos/bin
 
 ### 2.Nacos注册中心使用
 
-#### 2.1创建
+#### 2.1创建服务提供者nacos_provider
+
+​	<1>pom.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>springcloud_parent</artifactId>
+        <groupId>com.example</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>nacos_provider</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>springcloud_common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!--nacos客户端-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+<2>application.yml
+
+```yaml
+server:
+  port: 8090
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.211.131:8848 #注册中心的地址
+  application:
+    name: nacos-provider #注册到nacos的服务名
+```
+
+<3>java
+
+conrtoller
+
+```java
+import com.example.pojo.User;
+import com.example.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/provider")
+public class UserController {
+
+    @Autowired
+    private UserService userService;
+
+    @RequestMapping("/getUserById/{id}")
+    public User getUserById(@PathVariable Integer id){
+        return userService.getUserById(id);
+    }
+}
+```
+
+service
+
+```java
+import com.example.pojo.User;
+
+public interface UserService {
+    User getUserById(Integer id);
+}
+
+```
+
+```java
+import com.example.pojo.User;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserServiceImpl implements UserService{
+
+    @Override
+    public User getUserById(Integer id){
+        return new User(id, "admin", 18);
+    }
+}
+
+```
+
+SpringBootApplication
+
+```java
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient //注册自己并发现其他服务
+public class NacosProviderApp {
+    public static void main(String[] args) {
+        SpringApplication.run(NacosProviderApp.class, args);
+    }
+}
+```
+
+#### 2.3创建服务消费者nacos_consumer
+
+<1>pom.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>springcloud_parent</artifactId>
+        <groupId>com.example</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>nacos_consumer</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>springcloud_common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+<2>application.yml
+
+```yaml
+server:
+  port: 80
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.211.131:8848 #注册中心的地址
+  application:
+    name: nacos-consumer #注册到nacos的服务名
+```
+
+<3>java
+
+config
+
+```java
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+public class BeanConfig {
+
+    //RestTemplate：是spring提供的一个工具类，作用是发送restful请求
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
+    }
+}
+```
+
+
+
+controller
+
+```java
+import com.example.pojo.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/consumer")
+public class UserController {
+
+    @Autowired
+    private RestTemplate restTemplate;
+    //springcloud提供的工具类，作用：发现服务
+    @Autowired
+    private DiscoveryClient discoveryClient;
+
+    @RequestMapping("/getUserById/{id}")
+    public User getUserById(@PathVariable Integer id){
+        //获得所有的服务名
+        List<String> serviceList = discoveryClient.getServices();
+        for (String serviceName : serviceList) {
+            System.out.println(serviceName);
+        }
+
+        //调用nacos_provider服务
+        //缺点：1、ip和port硬编码    2、不能实现负载均衡
+        //String url = "http://127.0.0.1:8090/provider/getUserById/"+id;
+
+        //缺点：2、不能实现负载均衡
+        ServiceInstance service = discoveryClient.getInstances("nacos-provider").get(0);
+        String url = "http://"+ service.getHost() +":"+ service.getPort() +"/provider/getUserById/"+id;
+        return restTemplate.getForObject(url, User.class);
+    }
+}
+
+```
+
+### 3.Nacos配置中心使用
+
+#### 3.1创建配置中心nacos_config
+
+​	<1>pom.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>springcloud_parent</artifactId>
+        <groupId>com.example</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>nacos_config</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+<2>bootstrap.yml
+
+> 客户端配置文件的名称必须为`bootstrap.yml`
+>
+> - `bootstrap.yml`比 `applicaton.yml` 优先加载，应用于系统级别参数配置，一般不会变动；
+> - `application.yml`应用于SpringBoot项目的自动化配置；
+
+```yaml
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.211.131:8848 #注册中心的地址#配置文件的前缀
+        prefix: nacos-config #配置文件的前缀，默认是spring.application.name
+        file-extension: yaml #配置文件的后缀，默认是properties
+#Data ID的语法：${spring.cloud.nacos.config.prefix}.${spring.cloud.nacos.config.file-extension}
+```
+
+<3>java
+
+controller
+
+```java
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RefreshScope //重新从BeanFactory获取一个新的实例（该实例使用新的配置）
+public class ConfigController {
+
+    @Value("${spring.datasource.driver-class-name}")
+    private String driverClassName;
+    @Value("${spring.datasource.url}")
+    private String url;
+    @Value("${spring.datasource.username}")
+    private String username;
+    @Value("${spring.datasource.password}")
+    private String password;
+    @Value("${spring.datasource.type}")
+    private String type;
+
+    @GetMapping("/config/info")
+    public String getConfigInfo() {
+        System.out.println(this);
+        String configInfo = driverClassName+"<br>"+url+"<br>"+username+"<br>"
+                +password+"<br>"+type;
+        return configInfo;
+    }
+}
+```
+
+SpringBootApplication
+
+```java
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+public class NacosConfigApp {
+
+    public static void main(String[] args) {
+        SpringApplication.run(NacosConfigApp.class,args);
+    }
+}
+```
+
+#### 3.2在nacos中新建配置文件
+
+```yaml
+server:
+  port: 80
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.211.131:8848
+  application:
+    name: nacos-config
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.211.131:3306/health?characterEncoding=UTF-8
+    username: root
+    password: 1111
+    type: com.alibaba.druid.pool.DruidDataSource
+```
+
+![image-20221009212733188](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009212733188.png)
+
+### 3.3测试
+
+1.启动时加载配置文件
+
+![image-20221009213211549](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009213211549.png)
+
+![image-20221009213226665](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009213226665.png)
+
+2.修改配置文件后nacos监听到MD5有变化则推送消息给客户端，客户端收到消息后会拉取最新配置（参考
+`配置管理->监听查询`菜单）
+
+![image-20221009213243110](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009213243110.png)
+
+3.浏览器访问：http://127.0.0.1/config/info
+
+![image-20221009213256584](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009213256584.png)
