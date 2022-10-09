@@ -1002,7 +1002,7 @@ links:
       title: "热榜",
       intro: "摸摸鱼热榜",
       link: "https://momoyu.cc/",
-      avatar: "/img/favicon.png"
+      avatar: "https://momoyu.cc/img/logo-1.4a8f7d71.png"
     }
     - {
       title: "GitHub中文社区",
@@ -1014,7 +1014,7 @@ links:
       title: "Java 全栈知识体系",
       intro: "pdai tech",
       link: "https://pdai.tech/",
-      avatar: "/img/favicon.png"
+      avatar: "https://pdai.tech/_images/index-read.gif"
     }
     - {
       title: "JavaGuide",
@@ -1026,13 +1026,13 @@ links:
       title: "程序导航",
       intro: "不知道放什么，先放这些",
       link: "http://www.cxy521.com/",
-      avatar: "/img/favicon.png"
+      avatar: "http://www.cxy521.com/static/img/logo.png"
     }
     - {
       title: "全历史",
       intro: "知古谏今，纵览历史长河",
       link: "https://www.allhistory.com/",
-      avatar: "/img/favicon.png"
+      avatar: "https://static.allhistory.com/online/common/img/logo-ah.5721.png"
     }
 
   # 当成员头像加载失败时，替换为指定图片
