@@ -17,7 +17,7 @@ comment: waline
 
 在[dubbo微服务基础知识](https://i-xiaoxin.github.io/2022/09/21/dubbo%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/) 中阐述了web系统架构从单体架构->分布式架构->SOA架构，SOA也是面向服务，但是微服务是进一步演化抽取拆分
 
-![微服务架构与SOA的区别](https://raw.githubusercontent.com/i-xiaoxin/image/master/20220329175414733.png)
+![](https://raw.githubusercontent.com/i-xiaoxin/image/master/20220329175414733.png)
 
 > 微服务架构是一种应用架构类型，其中应用会开发为一系列服务。它提供了独立开发、部署和维护微服务架构图和服务的框架。
 
@@ -107,6 +107,14 @@ Spring Cloud Alibaba 版本及其自身所适配的各组件对应版本如下�
 
 [[2]Spring Cloud Alibaba 参考文档](https://spring-cloud-alibaba-group.github.io/github-pages/hoxton/zh-cn/index.html#_%E4%BB%8B%E7%BB%8D)
 
+<div>
+    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
+<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
+<div id="waline"></div>
+  <script>
+    Waline({
+      el: '#waline',
+      serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
+    });
+  </script>
 
-
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>

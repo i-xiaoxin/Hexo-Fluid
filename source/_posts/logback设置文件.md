@@ -72,6 +72,45 @@ comment: waline
 </configuration>
 ```
 
+### Logback日志色彩编码
+
+```xml
+Demo
+<pattern>%red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)
+</pattern>
+```
+
+#### 支持的彩色编码
+
+- <div color=black>%black 黑色</div>
+
+- <div color=red>%red 红色</div>
+
+- <div color=green>%green 绿色</div>
+
+- %yellow 黄色
+
+- <div color=blue>%blue 蓝色</div>
+
+- <div color=magenta>%magenta 洋红色</div>
+
+- <div color=cyan>%cyan 青色</div>
+
+- %white 白色
+
+- <div color=gray>%gray 灰色</div>
+
+#### 以下为对应加粗的颜色代码
+
+- %boldRed
+- %boldGreen
+- %boldYellow
+- %boldBlue
+- %boldMagenta
+- %boldCyan
+- %boldWhite
+- %highlight 高亮色
+
 <div>
     <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
 <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
@@ -82,6 +121,4 @@ comment: waline
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
-
-
 

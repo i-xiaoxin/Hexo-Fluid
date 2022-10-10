@@ -3,12 +3,14 @@ title: Nacos注册中心与配置中心
 date: 2022-10-08 21:29:02
 tags: 
 - 微服务
-- SpringCloud
+- Spring Cloud Alibaba
 - Nacos
+- Nginx
 index_img: /img/article8.jpg
 banner_img: /img/post_banner.jpg
 categories:
 - 微服务
+- Spring Cloud Alibaba
 comment: waline
 ---
 
@@ -94,7 +96,7 @@ cd /usr/local/nacos/bin
 
 #### 2.1创建服务提供者nacos_provider
 
-​	<1>pom.xml
+##### 	<1>pom.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -134,7 +136,7 @@ cd /usr/local/nacos/bin
 </project>
 ```
 
-<2>application.yml
+##### <2>application.yml
 
 ```yaml
 server:
@@ -148,7 +150,7 @@ spring:
     name: nacos-provider #注册到nacos的服务名
 ```
 
-<3>java
+##### <3>java
 
 conrtoller
 
@@ -219,7 +221,7 @@ public class NacosProviderApp {
 
 #### 2.3创建服务消费者nacos_consumer
 
-<1>pom.xml
+##### <1>pom.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -257,7 +259,7 @@ public class NacosProviderApp {
 </project>
 ```
 
-<2>application.yml
+##### <2>application.yml
 
 ```yaml
 server:
@@ -271,7 +273,7 @@ spring:
     name: nacos-consumer #注册到nacos的服务名
 ```
 
-<3>java
+##### <3>java
 
 config
 
@@ -343,7 +345,7 @@ public class UserController {
 
 #### 3.1创建配置中心nacos_config
 
-​	<1>pom.xml
+##### 	<1>pom.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -380,7 +382,7 @@ public class UserController {
 </project>
 ```
 
-<2>bootstrap.yml
+##### <2>bootstrap.yml
 
 > 客户端配置文件的名称必须为`bootstrap.yml`
 >
@@ -398,7 +400,7 @@ spring:
 #Data ID的语法：${spring.cloud.nacos.config.prefix}.${spring.cloud.nacos.config.file-extension}
 ```
 
-<3>java
+##### <3>java
 
 controller
 
@@ -470,26 +472,327 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
 ```
 
-![image-20221009212733188](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009212733188.png)
+![](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009212733188.png)
 
-### 3.3测试
+#### 3.3测试
 
 1.启动时加载配置文件
 
-![image-20221009213211549](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009213211549.png)
+![](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009213211549.png)
 
-![image-20221009213226665](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009213226665.png)
+![](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009213226665.png)
 
 2.修改配置文件后nacos监听到MD5有变化则推送消息给客户端，客户端收到消息后会拉取最新配置（参考
 `配置管理->监听查询`菜单）
 
-![image-20221009213243110](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009213243110.png)
+![](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009213243110.png)
 
 3.浏览器访问：http://127.0.0.1/config/info
 
-![image-20221009213256584](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009213256584.png)
+![](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221009213256584.png)
+
+#### 3.4Nacos配置管理模型
+
+Nacos配置管理，通过Namespace、group、Data ID能够定位到一个配置集。
+
+Namespace Group DataId介绍：
+
+- Namespace: 代表不同的环境的配置隔离, 如: 开发、测试， 生产等
+- Group: 可以代表某个项目, 如XX医疗项目, XX电商项目
+- DataId: 每个项目下往往有若干个工程, 每个配置集(DataId)是一个工程的主配置文件
+
+![](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221010165507276.png)
+
+获取配置集需要指定：
+
+1. nacos服务地址，必须指定
+2. namespace，如不指定默认public
+3. group，如不指定默认 DEFAULT_GROUP
+4. dataId，必须指定
+
+> Nacos配置隔离先在配置中对以上参数进行设置，通过对配置集指定参数进行配置隔离
+
+#### 3.5服务隔离
+
+nacos_provider：
+
+```yaml
+server:
+  port: 8090
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.98.105.36:8848
+        namespace: test #开发环境
+        group: nacos_group #项目组  provide与consumer同项目保持一致
+  application:
+    name: nacos-provider
+```
+
+nacos_consumer：
+
+```yaml
+server:
+  port: 80
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.98.105.36:8848
+        namespace: test #开发环境
+        group: nacos_group #项目组  provide与consumer同项目保持一致
+  application:
+    name: nacos-consumer
+```
+
+### 五、Nacos持久化
+
+#### 1.为什么要持久化？
+
+​	Nacos默认有自带嵌入式数据库derby，但是如果做集群模式的话，就不能使用自己的数据库不然每个节点一个数据库，那么数据就不统一了，需要使用外部的mysql
+
+#### 2.持久化配置步骤
+
+##### 2.1Nacos application.properties
+
+进入application.properties文件vim
+
+```properties
+#*************** Config Module Related Configurations ***************#
+### If use MySQL as datasource:
+spring.datasource.platform=mysql
+
+### Count of DB:
+db.num=1
+
+### Connect URL of DB:
+ db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?characterEncoding=utf8&connectTimeout=10000&socketTimeout=30000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+ db.user.0=root
+ db.password.0=12345678
+
+### Connection pool configuration: hikariCP
+db.pool.config.connectionTimeout=30000
+db.pool.config.validationTimeout=10000
+db.pool.config.maximumPoolSize=20
+db.pool.config.minimumIdle=2
+
+```
+
+##### 2.2Mysql数据库中配置
+
+Mysql中创建nacos数据库并将自带的`nacos-mysql.sql`导入即可
+
+##### 2.3测试
+
+启动Nacos创建配置，Mysql表config_info中数据同步增加即配置成功
+
+### 六、Nacos集群搭建
+
+#### 1.集群部署架构图
+
+<img src="https://raw.githubusercontent.com/i-xiaoxin/image/master/20221010193110.png" style="zoom:25%;" />
+
+#### 2.节点规划
+
+|     节点     | 端口 |
+| :----------: | :--: |
+| 47.98.105.36 | 8848 |
+| 47.98.105.36 | 8849 |
+| 47.98.105.36 | 8847 |
+
+#### 3.集群搭建
+
+##### 3.1配置cluster.conf文件
+
+```shell
+cd /usr/local/nacos/conf/
+cp cluster.conf.example cluster.conf
+vim cluster.conf
+
+#it is ip
+#example
+47.98.105.36:8847
+47.98.105.36:8848
+47.98.105.36:8849
+                
+```
+
+##### 3.2复制3个Nacos
+
+```shell
+cd /usr/local
+mkdir nacos_cluster
+cp -r nacos nacos_cluster/nacos_8847
+cp -r nacos nacos_cluster/nacos_8848
+cp -r nacos nacos_cluster/nacos_8849
+```
+
+##### 3.3分别配置port
+
+```shell
+cd nacos_8847/conf/
+vim application.properties
+server.port=8847
+
+
+cd nacos_8849/conf/
+vim application.properties
+server.port=8849
+
+```
+
+##### 3.4启动
+
+```shell
+cd /usr/local/nacos_cluster/nacos_8849/bin
+./startup.sh
+```
+
+#### 4.搭建nginx
+
+##### 4.1安装C语言环境
+
+```shell	
+yum -y install gcc pcre pcre-devel zlib zlib-devel openssl openssl-devel
+```
+
+##### 4.2下载nginx
+
+```shell
+wget -c https://nginx.org/download/nginx-1.12.0.tar.gz
+```
+
+##### 4.3解压
+
+```sheell
+tar -zxvf nginx-1.12.0.tar.gz
+```
+
+##### 4.4配置安装路径
+
+```shell
+./configure --prefix=/usr/local/nginx
+```
+
+##### 4.5编译并安装
+
+```shell
+make && make install
+```
+
+##### 4.6启动和关闭
+
+```shell
+ 启动：./nginx
+ 关闭：./nginx -s stop
+```
+
+#### 5.配置nginx代理nacos集群
+
+```shell
+ vim /usr/local/nginx/conf/nginx.conf
+ 
+ #gzip  on;
+    upstream nacosList {
+                server 47.98.105.36:8847;
+                server 47.98.105.36:8848;
+                server 47.98.105.36:8849;
+                }
+    server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            proxy_pass http://nacosList;
+        }
+
+#注意nacosList变量命名规范
+```
+
+启动nginx服务，访问http://47.98.105.36/nacos/；nginx会自动分配其中一个进行调用
+
+![](https://raw.githubusercontent.com/i-xiaoxin/image/master/image-20221010192857504.png)
+
+```yanml
+server:
+  port: 8090
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.98.105.36 	
+        #47.98.105.36:8848 配置Nginx后即可省略端口号由Nginx进行代理分配
+        namespace: test #开发环境
+        group: nacos_group #项目组
+  application:
+    name: nacos-provider
+```
+
+Nacos部署集群后服务地址省略端口号由Nginx进行代理分配
+
+### 七、Nacos开机自启动配置*
+
+#### 1.编写开机启动文件
+
+- 添加nacos.service文件
+
+```sh
+vim /lib/systemd/system/nacos.service
+```
+
+- 文件内容如下：
+
+```sh
+[Unit]
+Description=nacos
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/usr/local/nacos/bin/startup.sh -m standalone
+ExecReload=/usr/local/nacos/bin/shutdown.sh
+ExecStop=/usr/local/nacos/bin/shutdown.sh
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+```
+
+#### 2.修改nacos的startup.sh
+
+- 修改JAVA_HOME路径并注销之后的3行配置，如下：
+
+```sh
+[ ! -e "$JAVA_HOME/bin/java" ] && JAVA_HOME=/usr/local/jdk1.8.0_191 
+#[ ! -e "$JAVA_HOME/bin/java" ] && JAVA_HOME=/usr/java
+#[ ! -e "$JAVA_HOME/bin/java" ] && JAVA_HOME=/opt/taobao/java
+#[ ! -e "$JAVA_HOME/bin/java" ] && unset JAVA_HOME
+```
+
+#### 3.设置开机启动
+
+```sh
+systemctl daemon-reload        #重新加载服务配置
+systemctl enable nacos.service #设置为开机启动
+systemctl start nacos.service  #启动nacos服务
+systemctl stop nacos.service   #停止nacos服务
+```
 
 
 
+<div>
+    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
+<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
+<div id="waline"></div>
+  <script>
+    Waline({
+      el: '#waline',
+      serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
+    });
+  </script>
 
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
