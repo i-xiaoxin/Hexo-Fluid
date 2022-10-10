@@ -2,11 +2,11 @@
 title: Mysql之count()、count(1)、count(列名)区别
 date: 2022-09-27 18:12:02
 tags: 
-- mysql
+- Mysql
 index_img: /img/article9.webp
 banner_img: /img/post_banner.webp
 categories:
-- mysql
+- Mysql
 ---
 
 ### 作用

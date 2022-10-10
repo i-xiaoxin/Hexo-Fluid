@@ -2,12 +2,12 @@
 title: logback.xml
 date: 2022-09-28 21:29:02
 tags: 
-- utils
-- spring
+- Utils
+- Spring
 index_img: /img/article8.webp
 banner_img: /img/post_banner.webp
 categories:
-- utils
+- Utils
 comment: waline
 ---
 

@@ -2,9 +2,9 @@
 title: dubbo微服务基础知识
 date: 2022-09-21 18:12:02
 tags: 
-- dubbo
-- dubbox
-- zookeeper
+- Dubbo
+- Dubbox
+- Zookeeper
 index_img: /img/article3.webp
 banner_img: /img/post_banner.webp
 categories:

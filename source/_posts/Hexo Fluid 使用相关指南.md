@@ -1,12 +1,12 @@
 ---
 title: Hexo Fluid 使用相关指南
 date: 2022-09-21 17:04:34
-tags: other
+tags: Other
 index_img: https://raw.githubusercontent.com/i-xiaoxin/image/master/wallhaven-l3qrxq.jpg
 banner_img: /img/post_banner.webp
 sticky: 100
 categories:
-- hexo
+- Hexo
 comment: waline
 ---
 

@@ -2,13 +2,13 @@
 title: 七牛云使用Demo
 date: 2022-09-21 18:12:02
 tags: 
-- java
+- Java
 - 七牛云
-- spring
+- Spring
 index_img: /img/article6.webp
 banner_img: /img/post_banner.webp
 categories:
-- other
+- Other
 ---
 
 ### 前言

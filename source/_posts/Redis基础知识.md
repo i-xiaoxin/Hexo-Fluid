@@ -5,7 +5,7 @@ tags: Redis
 index_img: /img/article2.webp
 banner_img: /img/post_banner.webp
 categories:
-- redis
+- Redis
 
 ---
 

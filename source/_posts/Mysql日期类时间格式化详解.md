@@ -2,12 +2,12 @@
 title: Mysql日期类时间格式化详解
 date: 2022-09-27 19:22:02
 tags: 
-- mysql
-- date_format
+- Mysql
+- Date_format
 index_img: /img/article10.webp
 banner_img: /img/post_banner.webp
 categories:
-- mysql
+- Mysql
 
 ---
 
