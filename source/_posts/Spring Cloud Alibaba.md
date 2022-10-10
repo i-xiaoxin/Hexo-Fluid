@@ -5,8 +5,8 @@ tags:
 - 微服务
 - Spring Cloud
 - Spring Cloud Alibaba
-index_img: /img/article6.jpg
-banner_img: /img/post_banner.jpg
+index_img: /img/article6.webp
+banner_img: /img/post_banner.webp
 categories:
 - 微服务
 - Spring Cloud

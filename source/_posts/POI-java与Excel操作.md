@@ -5,8 +5,8 @@ tags:
 - java
 - POI
 - Excel
-index_img: /img/article8.jpg
-banner_img: /img/post_banner.jpg
+index_img: /img/article8.webp
+banner_img: /img/post_banner.webp
 categories:
 - utils
 ---

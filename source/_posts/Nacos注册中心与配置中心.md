@@ -6,8 +6,8 @@ tags:
 - Spring Cloud Alibaba
 - Nacos
 - Nginx
-index_img: /img/article8.jpg
-banner_img: /img/post_banner.jpg
+index_img: /img/article8.webp
+banner_img: /img/post_banner.webp
 categories:
 - 微服务
 - Spring Cloud Alibaba

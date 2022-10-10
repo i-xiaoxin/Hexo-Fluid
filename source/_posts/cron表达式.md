@@ -5,8 +5,8 @@ tags:
 - java
 - cron
 - spring
-index_img: /img/article5.jpg
-banner_img: /img/post_banner.jpg
+index_img: /img/article5.webp
+banner_img: /img/post_banner.webp
 categories:
 - java
 ---

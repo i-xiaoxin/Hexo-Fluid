@@ -3,8 +3,8 @@ title: Redis数据结构
 date: 2022-09-26 18:12:02
 tags: 
 - Redis
-index_img: /img/article7.jpg
-banner_img: /img/post_banner.jpg
+index_img: /img/article7.webp
+banner_img: /img/post_banner.webp
 categories:
 - Redis
 ---

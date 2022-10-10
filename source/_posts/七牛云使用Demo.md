@@ -5,8 +5,8 @@ tags:
 - java
 - 七牛云
 - spring
-index_img: /img/article6.jpg
-banner_img: /img/post_banner.jpg
+index_img: /img/article6.webp
+banner_img: /img/post_banner.webp
 categories:
 - other
 ---

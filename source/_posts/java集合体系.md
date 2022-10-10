@@ -2,8 +2,8 @@
 title: Java集合体系
 date: 2022-09-21 18:12:02
 tags: Java
-index_img: /img/article1.jpg
-banner_img: /img/post_banner.jpg
+index_img: /img/article1.webp
+banner_img: /img/post_banner.webp
 categories:
 - Java
 comment: waline

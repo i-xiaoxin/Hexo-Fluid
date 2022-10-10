@@ -5,8 +5,8 @@ tags:
 - dubbo
 - dubbox
 - zookeeper
-index_img: /img/article3.jpg
-banner_img: /img/post_banner.jpg
+index_img: /img/article3.webp
+banner_img: /img/post_banner.webp
 categories:
 - 微服务
 ---

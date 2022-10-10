@@ -4,8 +4,8 @@ date: 2022-09-27 19:22:02
 tags: 
 - mysql
 - date_format
-index_img: /img/article10.jpg
-banner_img: /img/post_banner.jpg
+index_img: /img/article10.webp
+banner_img: /img/post_banner.webp
 categories:
 - mysql
 

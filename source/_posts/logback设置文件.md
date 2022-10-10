@@ -4,8 +4,8 @@ date: 2022-09-28 21:29:02
 tags: 
 - utils
 - spring
-index_img: /img/article8.jpg
-banner_img: /img/post_banner.jpg
+index_img: /img/article8.webp
+banner_img: /img/post_banner.webp
 categories:
 - utils
 comment: waline
