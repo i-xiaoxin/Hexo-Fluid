@@ -64,8 +64,8 @@ Ribbon提供很多种负载均衡算法，例如轮询、随机 等等，默认�
 #### 1.1 controller
 
 ```java
-import com.bjpowernode.User;
-import com.bjpowernode.service.UserService;
+import com.example.User;
+import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,7 +87,7 @@ public class UserController {
 ### 1.2 service
 
 ```java
-import com.bjpowernode.User;
+import com.example.User;
 
 public interface UserService {
     User getUserById(Integer id);
@@ -95,7 +95,7 @@ public interface UserService {
 ```
 
 ```java
-import com.bjpowernode.User;
+import com.example.User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -172,7 +172,7 @@ public class BeanConfig {
 ### 2.2 controller
 
 ```java
-import com.bjpowernode.User;
+import com.example.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;

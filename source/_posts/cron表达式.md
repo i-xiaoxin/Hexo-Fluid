@@ -1,9 +1,9 @@
 ---
-title: cron表达式详解
+title: Cron表达式详解
 date: 2022-09-21 18:12:02
 tags: 
 - Java
-- cron
+- Cron
 - Spring
 index_img: /img/article5.webp
 banner_img: /img/post_banner.webp
