@@ -747,7 +747,7 @@ vim /lib/systemd/system/nacos.service
 
 - 文件内容如下：
 
-```sh
+```shell
 [Unit]
 Description=nacos
 After=network.target
@@ -768,6 +768,9 @@ WantedBy=multi-user.target
 - 修改JAVA_HOME路径并注销之后的3行配置，如下：
 
 ```sh
+vim /usr/local/nacos/bin/start.sh
+
+#找到 JAVA_HOME 设置绝对路径
 [ ! -e "$JAVA_HOME/bin/java" ] && JAVA_HOME=/usr/local/jdk1.8.0_191 
 #[ ! -e "$JAVA_HOME/bin/java" ] && JAVA_HOME=/usr/java
 #[ ! -e "$JAVA_HOME/bin/java" ] && JAVA_HOME=/opt/taobao/java
@@ -778,9 +781,10 @@ WantedBy=multi-user.target
 
 ```sh
 systemctl daemon-reload        #重新加载服务配置
-systemctl enable nacos.service #设置为开机启动
-systemctl start nacos.service  #启动nacos服务
-systemctl stop nacos.service   #停止nacos服务
+systemctl enable nacos.service   #设置为开机启动
+systemctl start nacos.service    #启动nacos服务
+systemctl stop nacos.service    #停止nacos服务
+systemctl status nacos.service   #查询nacos服务状态
 ```
 
 
@@ -795,4 +799,3 @@ systemctl stop nacos.service   #停止nacos服务
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
-
