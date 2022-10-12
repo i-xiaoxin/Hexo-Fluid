@@ -737,7 +737,7 @@ public class Demo {
 }
 ```
 
-### 七、线程通讯（wait/notify/notifyAll）
+## 七、线程通讯（wait/notify/notifyAll）
 
 ### 1.生产者与消费者模式
 
@@ -1336,6 +1336,11 @@ public class Demo {
 
 虽然以上方法可以解决线程死锁问题,但是会出现资源浪费的情况,原因是唤醒时没必要将所有的线程全都唤醒,唤醒时只需要唤醒对方即可
 
+## 八、拓展阅读
+
+[深入浅出Java多线程](http://concurrent.redspider.group/RedSpider.html)
+
+
 
 
 <div>
@@ -1348,3 +1353,4 @@ public class Demo {
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
+
