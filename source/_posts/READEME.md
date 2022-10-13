@@ -1,15 +1,4 @@
----
-title: i-xiaoxin-日志
-date: 2022-10-10 19:04:34
-tags: Other
-index_img: /img/default.png
-banner_img: /img/post_banner.webp
-categories:
-- Other
-comment: waline
----
-
-## 前言
+## i-xiaoxin.GitHub.io
 
 几经辗转终于还是敲定了这个blog；版本迭代了N-1次，开篇记录变化吧！
 
@@ -43,8 +32,6 @@ link: "🔗https://host",
 avatar: "🧩网站/Blog提供的原创链接"
 ```
 
-欢迎优趣投放🌐
-
 ### 2022年10月10日20点33分
 
 抛开GitHub异域世界不谈，在挂上工具的环境下多次访问[站点](https://i-xiaoxin.github.io/)；即使配上[Hexo Fluid](https://hexo.fluid-dev.com/docs/)懒加载还是图片加载缓慢，因为使用的是墙纸jpg；于是尝试使用经济方案wbep；情况好转80%
@@ -58,15 +45,5 @@ avatar: "🧩网站/Blog提供的原创链接"
 >- banner_img: /img/post_banner.webp ❓
 >- To Do add 📈
 
-<div>
-    <hr>
-    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
-<div id="waline"></div>
-  <script>
-    Waline({
-      el: '#waline',
-      serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
-    });
-  </script>
+
 
