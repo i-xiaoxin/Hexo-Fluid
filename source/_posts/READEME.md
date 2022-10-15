@@ -7,7 +7,6 @@ index_img: /img/article5.webp
 banner_img: /img/post_banner.webp
 categories:
 - Other
-comment: waline
 ---
 
 ## i-xiaoxin.GitHub.io
