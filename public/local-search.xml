@@ -4,6 +4,56 @@
   
   
   <entry>
+    <title>Maven依赖爆红Dependency not found 问题</title>
+    <link href="/2022/10/15/Maven%E4%BE%9D%E8%B5%96%E7%88%86%E7%BA%A2%E8%A7%A3%E5%86%B3/"/>
+    <url>/2022/10/15/Maven%E4%BE%9D%E8%B5%96%E7%88%86%E7%BA%A2%E8%A7%A3%E5%86%B3/</url>
+    
+    <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>Maven依赖倒入后pom文件IDEA提示错误：dependency not found</p><h2 id="原因-amp-解决"><a href="#原因-amp-解决" class="headerlink" title="原因&amp;解决"></a>原因&amp;解决</h2><h3 id="1-IDEA中Maven配置"><a href="#1-IDEA中Maven配置" class="headerlink" title="1. IDEA中Maven配置"></a>1. IDEA中Maven配置</h3><p>原因：项目中Maven的路径&amp;xml文件&amp;仓库路径配置变更；由于copy其他项目，默认路径未修正；由于文件配置存在多个导致配置异常等</p><p>解决： 重新配置</p><h3 id="2-本地仓库依赖不错在持续爆红"><a href="#2-本地仓库依赖不错在持续爆红" class="headerlink" title="2. 本地仓库依赖不错在持续爆红"></a>2. 本地仓库依赖不错在持续爆红</h3><p>原因：</p><ul><li>pom坐标错误</li><li>网络环境异常</li></ul><p>解决</p><ul><li>搜索当前依赖pom坐标 <a href="https://mvnrepository.com/">查询链接</a></li><li>项目依赖提示多个坐标错误，通过以上配置刷新后某个依赖仍旧爆红；IDEA提示<code>dependency not found</code>刷新多次无效<ul><li>尝试直接从Maven远程仓库下载手工部署到本地仓库，注意路径，不推荐</li><li>新建空白Maven项目，导入坐标刷新下载，爆红问题解决</li></ul></li></ul><p>😷遇到问题沉着冷静，认真阅读，方可豁然！！</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Maven</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Maven</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Mysql异常错误处理-Establishing SSL connection without server&#39;s identity verification is not recommended.</title>
+    <link href="/2022/10/15/Mysql%E8%BF%9E%E6%8E%A5%E9%94%99%E8%AF%AF1/"/>
+    <url>/2022/10/15/Mysql%E8%BF%9E%E6%8E%A5%E9%94%99%E8%AF%AF1/</url>
+    
+    <content type="html"><![CDATA[<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>Establishing SSL connection without server’s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn’t set. For compliance with existing applications not using SSL the verifyServerCertificate property is set to ‘false’. You need either to explicitly disable SSL by setting useSSL&#x3D;false, or set useSSL&#x3D;true and provide truststore for server certificate verification.</p><p>翻译：</p><p>不建议在没有服务器身份验证的情况下建立 SSL 连接。 根据 MySQL 5.5.45+、5.6.26+ 和 5.7.6+ 的要求，如果未设置显式选项，则默认情况下必须建立 SSL 连接。 为了符合不使用 SSL 的现有应用程序，verifyServerCertificate 属性设置为“false”。 您需要通过设置 useSSL&#x3D;false 来显式禁用 SSL，或者设置 useSSL&#x3D;true 并为服务器证书验证提供信任库。</p><h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>MySQL在高版本需要指明是否进行SSL连接</p><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>在mysql连接字符串url中加入ssl&#x3D;true或者false即可</p><p>url&#x3D;jdbc:mysql:&#x2F;&#x2F;127.0.0.1:3306&#x2F;framework?characterEncoding&#x3D;utf8<code>&amp;useSSL=false</code></p><h2 id="附加"><a href="#附加" class="headerlink" title="附加"></a>附加</h2><p>由于使用阿里云服务器，导致雪崩引发问题<code>MySql Host is blocked because of many connection errors; unblock with &#39;mysqladmin flush-hosts&#39;</code></p><p>原因：同一个ip在短时间内产生太多（超过mysql数据库max_connection_errors的最大值）中断的数据库连接而导致的阻塞；</p><p>解决：</p><p>1、提高允许的max_connection_errors数量（治标不治本）：</p><p>　　① 进入Mysql数据库查看max_connection_errors： <strong>show variables like ‘%max_connection_errors%’;</strong></p><p>　  ② 修改max_connection_errors的数量为1000： <strong>set global max_connect_errors &#x3D; 1000;</strong></p><p>　　③ 查看是否修改成功：<strong>show variables like ‘%max_connection_errors%’;</strong></p><p>2、使用<strong>mysqladmin flush-hosts</strong> 命令清理一下hosts文件（不知道mysqladmin在哪个目录下可以使用命令查找：<strong>whereis mysqladmin</strong>）；</p><p>　　① 在查找到的目录下使用命令修改：&#x2F;usr&#x2F;bin&#x2F;<strong>mysqladmin flush-hosts -h192.168.1.1</strong> -P3308 <strong>-uroot</strong> -prootpwd;</p><p>　　备注：</p><p>　　　　其中端口号，用户名，密码都可以根据需要来添加和修改；</p><p>　　　　配置有master&#x2F;slave主从数据库的要把主库和从库都修改一遍的（我就吃了这个亏明明很容易的几条命令结果折腾了大半天）；</p><p>　　　　第二步也可以在数据库中进行，命令如下：<strong>flush hosts;</strong></p><p><strong>参考黄聪博客园博客，原文链接：<a href="http://www.cnblogs.com/huangcong/p/5072915.html">http://www.cnblogs.com/huangcong/p/5072915.html</a></strong></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Mysql</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Mysql</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>MacOS iTerm2 无法使用rz异常</title>
     <link href="/2022/10/15/MacOS%20iTerm2%20%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8rz%E5%BC%82%E5%B8%B8%20/"/>
     <url>/2022/10/15/MacOS%20iTerm2%20%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8rz%E5%BC%82%E5%B8%B8%20/</url>

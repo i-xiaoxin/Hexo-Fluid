@@ -16,19 +16,18 @@
   <meta name="author" content="xiaoxinlore">
   <meta name="keywords" content="java">
   
-    <meta name="description" content="问题运行rz会报类似错：rz会出现?z waiting to receive.**B0100000023be50 原因 Mac OS未安装lrzsz mac上的终端不支持rz和sz，需要在iterm2配置一下  解决1. Mac安装rz注意：需要提前安装brew，此处不在赘述 1brew install lrzsz  2. 配置iTerm2 sh脚本2.1 在Mac目录&#x2F;usr&amp;#x2F">
+    <meta name="description" content="异常Establishing SSL connection without server’s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if ex">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MacOS iTerm2 无法使用rz异常">
-<meta property="og:url" content="https://github.com/i-xiaoxin/2022/10/15/MacOS%20iTerm2%20%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8rz%E5%BC%82%E5%B8%B8%20/index.html">
+<meta property="og:title" content="Mysql异常错误处理-Establishing SSL connection without server&#39;s identity verification is not recommended.">
+<meta property="og:url" content="https://github.com/i-xiaoxin/2022/10/15/Mysql%E8%BF%9E%E6%8E%A5%E9%94%99%E8%AF%AF1/index.html">
 <meta property="og:site_name" content="xiaoxinlore">
-<meta property="og:description" content="问题运行rz会报类似错：rz会出现?z waiting to receive.**B0100000023be50 原因 Mac OS未安装lrzsz mac上的终端不支持rz和sz，需要在iterm2配置一下  解决1. Mac安装rz注意：需要提前安装brew，此处不在赘述 1brew install lrzsz  2. 配置iTerm2 sh脚本2.1 在Mac目录&#x2F;usr&amp;#x2F">
+<meta property="og:description" content="异常Establishing SSL connection without server’s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if ex">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/img/article8.webp">
-<meta property="article:published_time" content="2022-10-15T13:29:02.000Z">
-<meta property="article:modified_time" content="2022-10-15T15:20:14.557Z">
+<meta property="article:published_time" content="2022-10-15T15:29:02.000Z">
+<meta property="article:modified_time" content="2022-10-15T15:55:01.565Z">
 <meta property="article:author" content="xiaoxinlore">
-<meta property="article:tag" content="Mac">
-<meta property="article:tag" content="iTerm2">
+<meta property="article:tag" content="Mysql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/img/article8.webp">
   
@@ -36,7 +35,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>MacOS iTerm2 无法使用rz异常 - xiaoxinlore</title>
+  <title>Mysql异常错误处理-Establishing SSL connection without server&#39;s identity verification is not recommended. - xiaoxinlore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="MacOS iTerm2 无法使用rz异常"></span>
+            <span id="subtitle" data-typed-text="Mysql异常错误处理-Establishing SSL connection without server&#39;s identity verification is not recommended."></span>
           
         </div>
 
@@ -239,7 +238,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-15 21:29" pubdate>
+        <time datetime="2022-10-15 23:29" pubdate>
           2022年10月15日 晚上
         </time>
       </span>
@@ -251,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          983 字
+          1.6k 字
         
       </span>
     
@@ -262,7 +261,7 @@
         
         
         
-          9 分钟
+          14 分钟
         
       </span>
     
@@ -300,44 +299,32 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">MacOS iTerm2 无法使用rz异常</h1>
+            <h1 style="display: none">Mysql异常错误处理-Establishing SSL connection without server&#39;s identity verification is not recommended.</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>运行rz会报类似错：rz会出现?z waiting to receive.**B0100000023be50</p>
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><ul>
-<li>Mac OS未安装lrzsz</li>
-<li>mac上的终端不支持rz和sz，需要在iterm2配置一下</li>
-</ul>
-<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><h3 id="1-Mac安装rz"><a href="#1-Mac安装rz" class="headerlink" title="1. Mac安装rz"></a>1. Mac安装rz</h3><p>注意：需要提前安装brew，此处不在赘述</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">brew install lrzsz<br></code></pre></td></tr></table></figure>
+                <h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>Establishing SSL connection without server’s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn’t set. For compliance with existing applications not using SSL the verifyServerCertificate property is set to ‘false’. You need either to explicitly disable SSL by setting useSSL&#x3D;false, or set useSSL&#x3D;true and provide truststore for server certificate verification.</p>
+<p>翻译：</p>
+<p>不建议在没有服务器身份验证的情况下建立 SSL 连接。 根据 MySQL 5.5.45+、5.6.26+ 和 5.7.6+ 的要求，如果未设置显式选项，则默认情况下必须建立 SSL 连接。 为了符合不使用 SSL 的现有应用程序，verifyServerCertificate 属性设置为“false”。 您需要通过设置 useSSL&#x3D;false 来显式禁用 SSL，或者设置 useSSL&#x3D;true 并为服务器证书验证提供信任库。</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>MySQL在高版本需要指明是否进行SSL连接</p>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>在mysql连接字符串url中加入ssl&#x3D;true或者false即可</p>
+<p>url&#x3D;jdbc:mysql:&#x2F;&#x2F;127.0.0.1:3306&#x2F;framework?characterEncoding&#x3D;utf8<code>&amp;useSSL=false</code></p>
+<h2 id="附加"><a href="#附加" class="headerlink" title="附加"></a>附加</h2><p>由于使用阿里云服务器，导致雪崩引发问题<code>MySql Host is blocked because of many connection errors; unblock with &#39;mysqladmin flush-hosts&#39;</code></p>
+<p>原因：同一个ip在短时间内产生太多（超过mysql数据库max_connection_errors的最大值）中断的数据库连接而导致的阻塞；</p>
+<p>解决：</p>
+<p>1、提高允许的max_connection_errors数量（治标不治本）：</p>
+<p>　　① 进入Mysql数据库查看max_connection_errors： <strong>show variables like ‘%max_connection_errors%’;</strong></p>
+<p>　  ② 修改max_connection_errors的数量为1000： <strong>set global max_connect_errors &#x3D; 1000;</strong></p>
+<p>　　③ 查看是否修改成功：<strong>show variables like ‘%max_connection_errors%’;</strong></p>
+<p>2、使用<strong>mysqladmin flush-hosts</strong> 命令清理一下hosts文件（不知道mysqladmin在哪个目录下可以使用命令查找：<strong>whereis mysqladmin</strong>）；</p>
+<p>　　① 在查找到的目录下使用命令修改：&#x2F;usr&#x2F;bin&#x2F;<strong>mysqladmin flush-hosts -h192.168.1.1</strong> -P3308 <strong>-uroot</strong> -prootpwd;</p>
+<p>　　备注：</p>
+<p>　　　　其中端口号，用户名，密码都可以根据需要来添加和修改；</p>
+<p>　　　　配置有master&#x2F;slave主从数据库的要把主库和从库都修改一遍的（我就吃了这个亏明明很容易的几条命令结果折腾了大半天）；</p>
+<p>　　　　第二步也可以在数据库中进行，命令如下：<strong>flush hosts;</strong></p>
+<p><strong>参考黄聪博客园博客，原文链接：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/huangcong/p/5072915.html">http://www.cnblogs.com/huangcong/p/5072915.html</a></strong></p>
 
-<h3 id="2-配置iTerm2-sh脚本"><a href="#2-配置iTerm2-sh脚本" class="headerlink" title="2. 配置iTerm2 sh脚本"></a>2. 配置iTerm2 sh脚本</h3><h4 id="2-1-在Mac目录-x2F-usr-x2F-local-x2F-bin下安装两个脚本"><a href="#2-1-在Mac目录-x2F-usr-x2F-local-x2F-bin下安装两个脚本" class="headerlink" title="2.1 在Mac目录&#x2F;usr&#x2F;local&#x2F;bin下安装两个脚本"></a>2.1 在Mac目录&#x2F;usr&#x2F;local&#x2F;bin下安装两个脚本</h4><p>官方提供<a href="https://github.com/Keystion/iterm2-zmodem">脚本</a></p>
-<ul>
-<li>iterm2-send-zmodem.sh</li>
-<li>iterm2-recv-zmodem.sh</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo wget https://raw.github.com/Keystion/iterm2-zmodem/master/iterm2-send-zmodem.sh<br>sudo wget https://raw.github.com/Keystion/iterm2-zmodem/master/iterm2-recv-zmodem.sh<br>sudo <span class="hljs-built_in">chmod</span> 777 /usr/local/bin/iterm2-*	<br></code></pre></td></tr></table></figure>
-
-<p>注意网络影响</p>
-<h4 id="2-2-iTerm2配置"><a href="#2-2-iTerm2配置" class="headerlink" title="2.2 iTerm2配置"></a>2.2 iTerm2配置</h4><p>在iTerm2中配置选项</p>
-<p>点击preferences → profiles，选择某个profile，如Default，之后继续选择advanced → triggers，添加编辑添加如下triggers</p>
-<p>需要添加两个内容如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">triggers1：</span><br>Regular expression: /*/*B0100<br>Action: Run Silent Coprocess<br>Parameters:/usr/local/bin/iterm2-send-zmodem.sh<br><span class="hljs-meta prompt_"> </span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">triggers2：</span><br>Regular expression: /*/*B00000000000000<br>Action: Run Silent Coprocess<br>Parameters:/usr/local/bin/iterm2-recv-zmodem.sh<br></code></pre></td></tr></table></figure>
-
-<p>配置完成最好重启一下Mac💻</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://webclown.net/2020/06/19/macOS-iTerm2%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8rz%E5%B9%B6%E6%8F%90%E7%A4%BAwaiting-to-receive%E3%80%90%E8%BD%AC%E3%80%91/">macOS iTerm2无法使用rz并提示waiting-to-receive. **B0100000023be50. _</a></p>
-<div>
-    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
-<div id="waline"></div>
-  <script>
-    Waline({
-      el: '#waline',
-      serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
-    });
-  </script>
                 
               </div>
             
@@ -355,7 +342,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Mac/" class="category-chain-item">Mac</a>
+  <a href="/categories/Mysql/" class="category-chain-item">Mysql</a>
   
   
 
@@ -370,9 +357,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Mac/">#Mac</a>
-      
-        <a href="/tags/iTerm2/">#iTerm2</a>
+        <a href="/tags/Mysql/">#Mysql</a>
       
     </div>
   
@@ -384,8 +369,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>MacOS iTerm2 无法使用rz异常</div>
-      <div>https://github.com/i-xiaoxin/2022/10/15/MacOS iTerm2 无法使用rz异常 /</div>
+      <div>Mysql异常错误处理-Establishing SSL connection without server&#39;s identity verification is not recommended.</div>
+      <div>https://github.com/i-xiaoxin/2022/10/15/Mysql连接错误1/</div>
     </div>
     <div class="license-meta">
       
@@ -429,9 +414,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/15/Mysql%E8%BF%9E%E6%8E%A5%E9%94%99%E8%AF%AF1/" title="Mysql异常错误处理-Establishing SSL connection without server&#39;s identity verification is not recommended.">
+                      <a href="/2022/10/15/Maven%E4%BE%9D%E8%B5%96%E7%88%86%E7%BA%A2%E8%A7%A3%E5%86%B3/" title="Maven依赖爆红Dependency not found 问题">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Mysql异常错误处理-Establishing SSL connection without server&#39;s identity verification is not recommended.</span>
+                        <span class="hidden-mobile">Maven依赖爆红Dependency not found 问题</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -439,8 +424,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/13/Feign%E5%A3%B0%E6%98%8E%E5%BC%8F%E6%9C%8D%E5%8A%A1/" title="Feign声明式服务">
-                        <span class="hidden-mobile">Feign声明式服务</span>
+                      <a href="/2022/10/15/MacOS%20iTerm2%20%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8rz%E5%BC%82%E5%B8%B8%20/" title="MacOS iTerm2 无法使用rz异常">
+                        <span class="hidden-mobile">MacOS iTerm2 无法使用rz异常</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
