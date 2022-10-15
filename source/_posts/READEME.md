@@ -1,3 +1,15 @@
+---
+title: Feign声明式服务
+date: 2022-10-13 21:09:02
+tags: 
+- Other
+index_img: /img/article5.webp
+banner_img: /img/post_banner.webp
+categories:
+- Other
+comment: waline
+---
+
 ## i-xiaoxin.GitHub.io
 
 几经辗转终于还是敲定了这个blog；版本迭代了N-1次，开篇记录变化吧！
