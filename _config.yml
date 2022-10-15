@@ -105,6 +105,7 @@ theme: fluid
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repository: https://github.com/i-xiaoxin/i-xiaoxin.github.io
+  #repository: https://github.com/i-xiaoxin/i-xiaoxin.github.io
+  repository: git@github.com:i-xiaoxin/i-xiaoxin.github.io.git
   branch: master
 
