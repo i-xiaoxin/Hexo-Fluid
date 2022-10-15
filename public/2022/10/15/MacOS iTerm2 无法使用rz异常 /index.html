@@ -16,19 +16,19 @@
   <meta name="author" content="xiaoxinlore">
   <meta name="keywords" content="java">
   
-    <meta name="description" content="Logback1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;&lt;configuration&gt;">
+    <meta name="description" content="问题运行rz会报类似错：rz会出现?z waiting to receive.**B0100000023be50 原因 Mac OS未安装lrzsz mac上的终端不支持rz和sz，需要在iterm2配置一下  解决1. Mac安装rz注意：需要提前安装brew，此处不在赘述 1brew install lrzsz  2. 配置iTerm2 sh脚本2.1 在Mac目录&#x2F;usr&amp;#x2F">
 <meta property="og:type" content="article">
-<meta property="og:title" content="logback.xml">
-<meta property="og:url" content="https://github.com/i-xiaoxin/2022/09/28/logback%E8%AE%BE%E7%BD%AE%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:title" content="MacOS iTerm2 无法使用rz异常">
+<meta property="og:url" content="https://github.com/i-xiaoxin/2022/10/15/MacOS%20iTerm2%20%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8rz%E5%BC%82%E5%B8%B8%20/index.html">
 <meta property="og:site_name" content="xiaoxinlore">
-<meta property="og:description" content="Logback1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;&lt;configuration&gt;">
+<meta property="og:description" content="问题运行rz会报类似错：rz会出现?z waiting to receive.**B0100000023be50 原因 Mac OS未安装lrzsz mac上的终端不支持rz和sz，需要在iterm2配置一下  解决1. Mac安装rz注意：需要提前安装brew，此处不在赘述 1brew install lrzsz  2. 配置iTerm2 sh脚本2.1 在Mac目录&#x2F;usr&amp;#x2F">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/img/article8.webp">
-<meta property="article:published_time" content="2022-09-28T13:29:02.000Z">
-<meta property="article:modified_time" content="2022-10-15T10:26:51.363Z">
+<meta property="article:published_time" content="2022-10-15T13:29:02.000Z">
+<meta property="article:modified_time" content="2022-10-15T10:38:42.230Z">
 <meta property="article:author" content="xiaoxinlore">
-<meta property="article:tag" content="Spring">
-<meta property="article:tag" content="Utils">
+<meta property="article:tag" content="Mac">
+<meta property="article:tag" content="iTerm2">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/img/article8.webp">
   
@@ -36,7 +36,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>logback.xml - xiaoxinlore</title>
+  <title>MacOS iTerm2 无法使用rz异常 - xiaoxinlore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +228,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="logback.xml"></span>
+            <span id="subtitle" data-typed-text="MacOS iTerm2 无法使用rz异常"></span>
           
         </div>
 
@@ -239,8 +239,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-28 21:29" pubdate>
-          2022年9月28日 晚上
+        <time datetime="2022-10-15 21:29" pubdate>
+          2022年10月15日 晚上
         </time>
       </span>
     
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.8k 字
+          983 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          24 分钟
+          9 分钟
         
       </span>
     
@@ -300,44 +300,34 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">logback.xml</h1>
+            <h1 style="display: none">MacOS iTerm2 无法使用rz异常</h1>
             
             
               <div class="markdown-body">
                 
-                <h3 id="Logback"><a href="#Logback" class="headerlink" title="Logback"></a>Logback</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span> ?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LOG_HOME&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;$&#123;catalina.base:-.&#125;/logs/&quot;</span> /&gt;</span><br>    <span class="hljs-comment">&lt;!-- 控制台输出 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">appender</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Stdout&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ch.qos.logback.core.ConsoleAppender&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 日志输出编码 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">layout</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ch.qos.logback.classic.PatternLayout&quot;</span>&gt;</span><br>            <span class="hljs-comment">&lt;!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">pattern</span>&gt;</span>%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; [%thread] %-5level %logger&#123;50&#125; - %msg%n<br>            <span class="hljs-tag">&lt;/<span class="hljs-name">pattern</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">appender</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 按照每天生成日志文件 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">appender</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;RollingFile&quot;</span>  <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">rollingPolicy</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;</span>&gt;</span><br>            <span class="hljs-comment">&lt;!--日志文件输出的文件名--&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">FileNamePattern</span>&gt;</span>$&#123;LOG_HOME&#125;/server.%d&#123;yyyy-MM-dd&#125;.log<span class="hljs-tag">&lt;/<span class="hljs-name">FileNamePattern</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">MaxHistory</span>&gt;</span>30<span class="hljs-tag">&lt;/<span class="hljs-name">MaxHistory</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">rollingPolicy</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">layout</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ch.qos.logback.classic.PatternLayout&quot;</span>&gt;</span><br>            <span class="hljs-comment">&lt;!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">pattern</span>&gt;</span>%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; [%thread] %-5level %logger&#123;50&#125; - %msg%n<br>            <span class="hljs-tag">&lt;/<span class="hljs-name">pattern</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--日志文件最大的大小--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">triggeringPolicy</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">MaxFileSize</span>&gt;</span>10MB<span class="hljs-tag">&lt;/<span class="hljs-name">MaxFileSize</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">triggeringPolicy</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">appender</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!--myibatis log configure--&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- 日志输出级别 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">root</span> <span class="hljs-attr">level</span>=<span class="hljs-string">&quot;DEBUG&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">appender-ref</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;Stdout&quot;</span> /&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">appender-ref</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;RollingFile&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">root</span>&gt;</span><br><br><br><br>    <span class="hljs-comment">&lt;!--日志异步到数据库 --&gt;</span><br>    <span class="hljs-comment">&lt;!--     &lt;appender name=&quot;DB&quot; class=&quot;ch.qos.logback.classic.db.DBAppender&quot;&gt;</span><br><span class="hljs-comment">            日志异步到数据库</span><br><span class="hljs-comment">            &lt;connectionSource class=&quot;ch.qos.logback.core.db.DriverManagerConnectionSource&quot;&gt;</span><br><span class="hljs-comment">               连接池</span><br><span class="hljs-comment">               &lt;dataSource class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;</span><br><span class="hljs-comment">                  &lt;driverClass&gt;com.mysql.jdbc.Driver&lt;/driverClass&gt;</span><br><span class="hljs-comment">                  &lt;url&gt;jdbc:mysql://127.0.0.1:3306/databaseName&lt;/url&gt;</span><br><span class="hljs-comment">                  &lt;user&gt;root&lt;/user&gt;</span><br><span class="hljs-comment">                  &lt;password&gt;root&lt;/password&gt;</span><br><span class="hljs-comment">                &lt;/dataSource&gt;</span><br><span class="hljs-comment">            &lt;/connectionSource&gt;</span><br><span class="hljs-comment">      &lt;/appender&gt; --&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="Logback日志色彩编码"><a href="#Logback日志色彩编码" class="headerlink" title="Logback日志色彩编码"></a>Logback日志色彩编码</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml">Demo<br><span class="hljs-tag">&lt;<span class="hljs-name">pattern</span>&gt;</span>%red(%d&#123;yyyy-MM-dd HH:mm:ss&#125;) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)<br><span class="hljs-tag">&lt;/<span class="hljs-name">pattern</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h4 id="支持的彩色编码"><a href="#支持的彩色编码" class="headerlink" title="支持的彩色编码"></a>支持的彩色编码</h4><ul>
-<li><div color=black>%black 黑色</div>
-</li>
-<li><div color=red>%red 红色</div>
-</li>
-<li><div color=green>%green 绿色</div>
-</li>
-<li><p>%yellow 黄色</p>
-</li>
-<li><div color=blue>%blue 蓝色</div>
-</li>
-<li><div color=magenta>%magenta 洋红色</div>
-</li>
-<li><div color=cyan>%cyan 青色</div>
-</li>
-<li><p>%white 白色</p>
-</li>
-<li><div color=gray>%gray 灰色</div></li>
+                <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>运行rz会报类似错：rz会出现?z waiting to receive.**B0100000023be50</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><ul>
+<li>Mac OS未安装lrzsz</li>
+<li>mac上的终端不支持rz和sz，需要在iterm2配置一下</li>
 </ul>
-<h4 id="以下为对应加粗的颜色代码"><a href="#以下为对应加粗的颜色代码" class="headerlink" title="以下为对应加粗的颜色代码"></a>以下为对应加粗的颜色代码</h4><ul>
-<li>%boldRed</li>
-<li>%boldGreen</li>
-<li>%boldYellow</li>
-<li>%boldBlue</li>
-<li>%boldMagenta</li>
-<li>%boldCyan</li>
-<li>%boldWhite</li>
-<li>%highlight 高亮色</li>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><h3 id="1-Mac安装rz"><a href="#1-Mac安装rz" class="headerlink" title="1. Mac安装rz"></a>1. Mac安装rz</h3><p>注意：需要提前安装brew，此处不在赘述</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">brew install lrzsz<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-配置iTerm2-sh脚本"><a href="#2-配置iTerm2-sh脚本" class="headerlink" title="2. 配置iTerm2 sh脚本"></a>2. 配置iTerm2 sh脚本</h3><h4 id="2-1-在Mac目录-x2F-usr-x2F-local-x2F-bin下安装两个脚本"><a href="#2-1-在Mac目录-x2F-usr-x2F-local-x2F-bin下安装两个脚本" class="headerlink" title="2.1 在Mac目录&#x2F;usr&#x2F;local&#x2F;bin下安装两个脚本"></a>2.1 在Mac目录&#x2F;usr&#x2F;local&#x2F;bin下安装两个脚本</h4><p>官方提供<a href="https://github.com/Keystion/iterm2-zmodem">脚本</a></p>
+<ul>
+<li>iterm2-send-zmodem.sh</li>
+<li>iterm2-recv-zmodem.sh</li>
 </ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo wget https://raw.github.com/Keystion/iterm2-zmodem/master/iterm2-send-zmodem.sh<br>sudo wget https://raw.github.com/Keystion/iterm2-zmodem/master/iterm2-recv-zmodem.sh<br>sudo <span class="hljs-built_in">chmod</span> 777 /usr/local/bin/iterm2-*	<br></code></pre></td></tr></table></figure>
+
+<p>注意网络影响</p>
+<h4 id="2-2-iTerm2配置"><a href="#2-2-iTerm2配置" class="headerlink" title="2.2 iTerm2配置"></a>2.2 iTerm2配置</h4><p>在iTerm2中配置选项</p>
+<p>点击preferences → profiles，选择某个profile，如Default，之后继续选择advanced → triggers，添加编辑添加如下triggers</p>
+<p>需要添加两个内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">triggers1：</span><br>Regular expression: /*/*B0100<br>Action: Run Silent Coprocess<br>Parameters:/usr/local/bin/iterm2-send-zmodem.sh<br><span class="hljs-meta prompt_"> </span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">triggers2：</span><br>Regular expression: /*/*B00000000000000<br>Action: Run Silent Coprocess<br>Parameters:/usr/local/bin/iterm2-recv-zmodem.sh<br></code></pre></td></tr></table></figure>
+
+<p>配置完成最好重启一下Mac💻</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://webclown.net/2020/06/19/macOS-iTerm2%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8rz%E5%B9%B6%E6%8F%90%E7%A4%BAwaiting-to-receive%E3%80%90%E8%BD%AC%E3%80%91/">macOS iTerm2无法使用rz并提示waiting-to-receive. **B0100000023be50. _</a></p>
 <div>
     <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
 <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
@@ -348,8 +338,6 @@
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
-
-
                 
               </div>
             
@@ -367,7 +355,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Utils/" class="category-chain-item">Utils</a>
+  <a href="/categories/Mac/" class="category-chain-item">Mac</a>
   
   
 
@@ -382,9 +370,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Spring/">#Spring</a>
+        <a href="/tags/Mac/">#Mac</a>
       
-        <a href="/tags/Utils/">#Utils</a>
+        <a href="/tags/iTerm2/">#iTerm2</a>
       
     </div>
   
@@ -396,8 +384,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>logback.xml</div>
-      <div>https://github.com/i-xiaoxin/2022/09/28/logback设置文件/</div>
+      <div>MacOS iTerm2 无法使用rz异常</div>
+      <div>https://github.com/i-xiaoxin/2022/10/15/MacOS iTerm2 无法使用rz异常 /</div>
     </div>
     <div class="license-meta">
       
@@ -409,7 +397,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月28日</div>
+          <div>2022年10月15日</div>
         </div>
       
       
@@ -441,18 +429,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/06/Echarts%E5%88%9D%E4%BD%93%E9%AA%8C/" title="Echarts初体验">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Echarts初体验</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/27/%E9%A9%AC%E4%BA%91%EF%BC%9A%E6%9C%AA%E6%9D%A5%E5%B7%B2%E6%9D%A5-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" title="马云：未来已来">
-                        <span class="hidden-mobile">马云：未来已来</span>
+                      <a href="/2022/10/15/READEME/" title="">
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -1,3 +1,16 @@
+---
+title: MacOS iTerm2 无法使用rz异常 
+date: 2022-10-15 21:29:02
+tags: 
+- Mac
+- iTerm2
+index_img: /img/article8.webp
+banner_img: /img/post_banner.webp
+categories:
+- Mac
+comment: waline
+---
+
 ## 问题
 
 运行rz会报类似错：rz会出现?z waiting to receive.**B0100000023be50
@@ -59,3 +72,14 @@ Parameters:/usr/local/bin/iterm2-recv-zmodem.sh
 
 
 参考：[macOS iTerm2无法使用rz并提示waiting-to-receive. **B0100000023be50. _](https://webclown.net/2020/06/19/macOS-iTerm2%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8rz%E5%B9%B6%E6%8F%90%E7%A4%BAwaiting-to-receive%E3%80%90%E8%BD%AC%E3%80%91/)
+
+<div>
+    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
+<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
+<div id="waline"></div>
+  <script>
+    Waline({
+      el: '#waline',
+      serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
+    });
+  </script>
