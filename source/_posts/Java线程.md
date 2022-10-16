@@ -4,8 +4,8 @@ date: 2022-10-11 20:09:02
 tags: 
 - Java
 - 线程
-index_img: /img/article2.webp
-banner_img: /img/post_banner.webp
+index_img: 
+banner_img: /img/article1.webp
 categories:
 - Java
 - 线程
@@ -1353,4 +1353,3 @@ public class Demo {
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
-

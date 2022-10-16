@@ -3,8 +3,8 @@ title: Mysql异常错误处理-Establishing SSL connection without server's iden
 date: 2022-10-15 23:29:02
 tags: 
 - Mysql
-index_img: /img/article8.webp
-banner_img: /img/post_banner.webp
+index_img: 
+banner_img: /img/article4.webp
 categories:
 - Mysql
 ---

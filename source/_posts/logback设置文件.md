@@ -4,8 +4,8 @@ date: 2022-09-28 21:29:02
 tags: 
 - Utils
 - Spring
-index_img: /img/article8.webp
-banner_img: /img/post_banner.webp
+index_img: 
+banner_img: /img/article8.webp
 categories:
 - Utils
 comment: waline
@@ -121,4 +121,3 @@ Demo
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
-

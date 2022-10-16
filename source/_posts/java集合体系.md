@@ -2,8 +2,8 @@
 title: Java集合体系
 date: 2022-09-21 18:12:02
 tags: Java
-index_img: /img/article1.webp
-banner_img: /img/post_banner.webp
+index_img: 
+banner_img: /img/article1.webp
 categories:
 - Java
 comment: waline
@@ -2424,4 +2424,3 @@ public class CollectionsDemo {
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
-

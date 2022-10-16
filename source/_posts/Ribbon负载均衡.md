@@ -5,8 +5,8 @@ tags:
 - 微服务
 - Spring Cloud Alibaba
 - Ribbon
-index_img: /img/article9.webp
-banner_img: /img/post_banner.webp
+index_img: 
+banner_img: /img/article2.webp
 categories:
 - 微服务
 - Spring Cloud Alibaba

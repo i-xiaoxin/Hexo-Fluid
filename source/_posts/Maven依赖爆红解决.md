@@ -3,8 +3,8 @@ title: Maven依赖爆红Dependency not found 问题
 date: 2022-10-15 23:55:02
 tags: 
 - Maven
-index_img: /img/article1.webp
-banner_img: /img/post_banner.webp
+index_img: 
+banner_img: /img/article8.webp
 categories:
 - Maven
 ---

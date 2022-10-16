@@ -1,9 +1,9 @@
 ---
-title: Feign声明式服务
+title: Blog日志
 date: 2022-10-13 21:09:02
 tags: 
 - Other
-index_img: /img/article5.webp
+index_img: 
 banner_img: /img/post_banner.webp
 categories:
 - Other
@@ -56,5 +56,6 @@ avatar: "🧩网站/Blog提供的原创链接"
 >- banner_img: /img/post_banner.webp ❓
 >- To Do add 📈
 
+### 2022年10月16日20点22分
 
-
+首页💻端加速基本🉑️以了，📱端速度不太理想，图片也是重复的，最终还是先考虑低成本解决方案，取消index_img

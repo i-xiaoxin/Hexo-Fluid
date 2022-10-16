@@ -5,8 +5,8 @@ tags:
 - 微服务
 - Spring Cloud
 - Spring Cloud Alibaba
-index_img: /img/article6.webp
-banner_img: /img/post_banner.webp
+index_img: 
+banner_img: /img/article6.webp
 categories:
 - 微服务
 - Spring Cloud
@@ -117,3 +117,4 @@ Spring Cloud Alibaba 版本及其自身所适配的各组件对应版本如下�
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
+

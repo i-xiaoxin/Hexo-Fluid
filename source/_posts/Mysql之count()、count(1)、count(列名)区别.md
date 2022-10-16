@@ -3,8 +3,8 @@ title: Mysql之count()、count(1)、count(列名)区别
 date: 2022-09-27 18:12:02
 tags: 
 - Mysql
-index_img: /img/article9.webp
-banner_img: /img/post_banner.webp
+index_img: 
+banner_img: /img/article9.webp
 categories:
 - Mysql
 ---

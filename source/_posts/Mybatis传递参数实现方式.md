@@ -4,8 +4,8 @@ date: 2022-09-21 18:12:02
 tags: 
 - Mybatis
 - DAO
-index_img: /img/article4.webp
-banner_img: /img/post_banner.webp
+index_img: 
+banner_img: /img/article4.webp
 categories:
 - Mybatis
 ---

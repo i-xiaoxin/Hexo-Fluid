@@ -4,8 +4,8 @@ date: 2022-10-15 21:29:02
 tags: 
 - Mac
 - iTerm2
-index_img: /img/article8.webp
-banner_img: /img/post_banner.webp
+index_img: 
+banner_img: /img/article8.webp
 categories:
 - Mac
 comment: waline

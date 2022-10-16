@@ -7,8 +7,8 @@ tags:
 - Feign
 - HTTPClient
 - OpenFeign
-index_img: /img/article5.webp
-banner_img: /img/post_banner.webp
+index_img: 
+banner_img: /img/article3.webp
 categories:
 - 微服务
 - Spring Cloud Alibaba

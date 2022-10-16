@@ -5,8 +5,8 @@ tags:
 - Vue
 - Echarts
 - 前端
-index_img: /img/article3.webp
-banner_img: /img/post_banner.webp
+index_img: 
+banner_img: /img/article3.webp
 categories:
 - 前端
 comment: waline
