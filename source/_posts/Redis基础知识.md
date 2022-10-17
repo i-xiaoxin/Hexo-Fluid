@@ -188,6 +188,12 @@ wget http://download.redis.io/releases/redis-5.0.0.tar.gz
 tar –xvf redis-5.0.0.tar.gz
 ```
 
+安装c++环境
+
+```shell
+yum -y install gcc gcc-c++ kernel-devel
+```
+
 编译（在解压的目录中执行）：
 
 ```bash
