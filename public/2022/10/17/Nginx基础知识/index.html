@@ -24,7 +24,7 @@
 <meta property="og:description" content="Nginx介绍1. 什么是Nginx？Nginx [engine x] 是Web服务器和反向代理服务器、邮件代理服务器和通用 TCP&#x2F;UDP 代理服务器，最初由Igor Sysoev编写。很长一段时间以来，它一直在许多负载重的俄罗斯网站上运行，包括 Yandex、 Mail.Ru、 VK和 Rambler。基于C语言开发 2. 反向代理正向代理（forward proxy）：是一个位于客">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-17T12:29:02.000Z">
-<meta property="article:modified_time" content="2022-10-17T09:19:18.516Z">
+<meta property="article:modified_time" content="2022-10-17T09:24:45.650Z">
 <meta property="article:author" content="xiaoxinlore">
 <meta property="article:tag" content="Nginx">
 <meta property="article:tag" content="负载均衡">
@@ -220,7 +220,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/article0.webp') no-repeat center center; background-size: cover;">
+     style="background: url('/img/article3.webp') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -422,7 +422,7 @@
 
 <h3 id="2-配置nginx-conf"><a href="#2-配置nginx-conf" class="headerlink" title="2. 配置nginx.conf"></a>2. 配置nginx.conf</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">server&#123;<br>        listen 80;<br>        server_name localhost;<br><br>        location ~* \.(gif|jpg|png|jpeg)$ &#123;<br>            root /usr/upload/images;<br>            #root：转发到目录里<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
 
-<h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3. 测试"></a>3. 测试</h3><p>访问测试地址<a target="_blank" rel="noopener" href="http://10.211.55.7/11.jpg%E8%BF%94%E5%9B%9E%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%9B%BE%E7%89%87">http://10.211.55.7/11.jpg返回静态资源图片</a></p>
+<h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3. 测试"></a>3. 测试</h3><p>访问测试地址<code>http://10.211.55.7/11.jpg</code>返回静态资源图片</p>
 
                 
               </div>

@@ -5,7 +5,7 @@ tags:
 - Nginx
 - 负载均衡
 index_img: 
-banner_img: /img/article0.webp
+banner_img: /img/article3.webp
 categories:
 - Nginx
 comment: waline
@@ -344,4 +344,4 @@ server{
 
 ### 3. 测试
 
-访问测试地址http://10.211.55.7/11.jpg返回静态资源图片
+访问测试地址`http://10.211.55.7/11.jpg`返回静态资源图片
