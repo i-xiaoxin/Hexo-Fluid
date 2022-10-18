@@ -191,7 +191,7 @@ tar –xvf redis-5.0.0.tar.gz
 安装c++环境
 
 ```shell
-yum -y install gcc gcc-c++ kernel-devel
+yum install gcc-c++
 ```
 
 编译（在解压的目录中执行）：
@@ -203,8 +203,29 @@ make
 安装（在解压的目录中执行）：
 
 ```bash
-make install
+make install PREFIX=/usr/local/redis
 ```
+
+拷贝并修改配置文件：
+
+```bash
+ cp /usr/upload/redis-3.0.7/redis.conf /usr/local/redis/bin
+ 
+ # 后台启动
+  vim /usr/local/redis/bin/redis.conf：
+                daemonize yes
+```
+
+启动和关闭：
+
+```bash
+#启动
+./redis-server redis.conf
+#关闭
+./redis-cli -h 127.0.0.1 -p 6379 shutdown
+```
+
+
 
 （2）安装 Redis
 
