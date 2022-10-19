@@ -1,0 +1,776 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/tab.png">
+  <link rel="icon" href="/img/tab.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="xiaoxinlore">
+  <meta name="keywords" content="java">
+  
+    <meta name="description" content="前提 Mac需要安装Homebrew  配置安装使用brew安装nginx 1brew install nginx  查看nginx的配置信息 1brew info nginx  输出内容如下 12345678910111213141516171819202122232425262728293031nginx: stable 1.23.1 (bottled), HEADHTTP(S) server">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Mac配置安装Nginx">
+<meta property="og:url" content="https://github.com/i-xiaoxin/2022/10/18/%E5%9F%BA%E4%BA%8EMac%E5%AE%89%E8%A3%85Nginx/index.html">
+<meta property="og:site_name" content="xiaoxinlore">
+<meta property="og:description" content="前提 Mac需要安装Homebrew  配置安装使用brew安装nginx 1brew install nginx  查看nginx的配置信息 1brew info nginx  输出内容如下 12345678910111213141516171819202122232425262728293031nginx: stable 1.23.1 (bottled), HEADHTTP(S) server">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-18T13:29:02.000Z">
+<meta property="article:modified_time" content="2022-10-18T11:50:29.923Z">
+<meta property="article:author" content="xiaoxinlore">
+<meta property="article:tag" content="Mac">
+<meta property="article:tag" content="Nginx">
+<meta property="article:tag" content="MacOS">
+<meta property="article:tag" content="M1">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>基于Mac配置安装Nginx - xiaoxinlore</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"github.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>xiaoxinlore</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/article3.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="基于Mac配置安装Nginx"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-18 21:29" pubdate>
+          2022年10月18日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">基于Mac配置安装Nginx</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><blockquote>
+<p>Mac需要安装Homebrew</p>
+</blockquote>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用brew安装nginx</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">brew install nginx<br></code></pre></td></tr></table></figure>
+
+<p>查看nginx的配置信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">brew info nginx<br></code></pre></td></tr></table></figure>
+
+<p>输出内容如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs sh">nginx: stable 1.23.1 (bottled), HEAD<br>HTTP(S) server and reverse proxy, and IMAP/POP3 proxy server<br>https://nginx.org/<br><span class="hljs-comment"># 以下是安装nginx路径</span><br>/opt/homebrew/Cellar/nginx/1.23.1 (26 files, 2.2MB) *<br>  Poured from bottle on 2022-10-18 at 18:00:26<br><span class="hljs-comment"># 安装源</span><br>From: https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/nginx.rb<br>License: BSD-2-Clause<br>==&gt; Dependencies<br>Required: openssl@1.1 ✔, pcre2 ✔<br>==&gt; Options<br>--HEAD<br>	Install HEAD version<br>==&gt; Caveats<br><span class="hljs-comment"># 根目录</span><br>Docroot is: /opt/homebrew/var/www<br><span class="hljs-comment"># 配置路径</span><br>The default port has been <span class="hljs-built_in">set</span> <span class="hljs-keyword">in</span> /opt/homebrew/etc/nginx/nginx.conf to 8080 so that<br>nginx can run without sudo.<br><span class="hljs-comment"># 启动路径</span><br>nginx will load all files <span class="hljs-keyword">in</span> /opt/homebrew/etc/nginx/servers/.<br><br>To restart nginx after an upgrade:<br>  brew services restart nginx<br>Or, <span class="hljs-keyword">if</span> you don<span class="hljs-string">&#x27;t want/need a background service you can just run:</span><br><span class="hljs-string">  /opt/homebrew/opt/nginx/bin/nginx -g daemon off;</span><br><span class="hljs-string">==&gt; Analytics</span><br><span class="hljs-string">install: 29,315 (30 days), 115,535 (90 days), 454,216 (365 days)</span><br><span class="hljs-string">install-on-request: 29,264 (30 days), 115,323 (90 days), 453,381 (365 days)</span><br><span class="hljs-string">build-error: 3 (30 days)</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="brew相关命令"><a href="#brew相关命令" class="headerlink" title="brew相关命令"></a>brew相关命令</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 启动nginx服务</span><br>brew services start nginx <br><span class="hljs-comment"># 重启命令</span><br>brew services restart nginx<br><span class="hljs-comment"># 关闭命令</span><br>brew services stop nginx<br><br><span class="hljs-comment"># 关闭命令提示，不推荐使用</span><br>Stopping `nginx`... (might take a <span class="hljs-keyword">while</span>)<br>==&gt; Successfully stopped `nginx` (label: homebrew.mxcl.nginx)<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="检验nginx配置文件"><a href="#检验nginx配置文件" class="headerlink" title="检验nginx配置文件"></a>检验nginx配置文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 命令</span><br>sudo /opt/homebrew/Cellar/nginx/1.23.1/bin/nginx -t -c /opt/homebrew/etc/nginx/nginx.conf<br><br><span class="hljs-comment"># 输出信息</span><br>nginx: the configuration file /opt/homebrew/etc/nginx/nginx.conf syntax is ok<br>nginx: configuration file /opt/homebrew/etc/nginx/nginx.conf <span class="hljs-built_in">test</span> is successful<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="通过进程关闭Nginx"><a href="#通过进程关闭Nginx" class="headerlink" title="通过进程关闭Nginx"></a>通过进程关闭Nginx</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 获取到nginx的进程</span><br>ps -ef|grep nginx<br><br><span class="hljs-comment"># 输出内容</span><br> 501 74155     1   0  6:05下午 ??         0:00.00 nginx: master process /opt/homebrew/Cellar/nginx/1.23.1/bin/nginx<br>  501 74156 74155   0  6:05下午 ??         0:00.06 nginx: worker process<br>  501 77226 72927   0  6:41下午 ttys002    0:00.00 grep --color=auto --exclude-dir=.bzr --exclude-dir=CVS --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn --exclude-dir=.idea --exclude-dir=.tox nginx<br>  <br><span class="hljs-comment"># 进程结束命令</span><br><span class="hljs-built_in">kill</span> -term 74155<br><br><span class="hljs-comment"># 拓展</span><br><span class="hljs-built_in">kill</span> -QUIT 72 (从容的停止，即不会立刻停止)<br><br>Kill -TERM 72 （立刻停止）<br><br>Kill -INT 72 （和上面一样，也是立刻停止）<br></code></pre></td></tr></table></figure>
+
+<h2 id="解决异常错误"><a href="#解决异常错误" class="headerlink" title="解决异常错误"></a>解决异常错误</h2><h3 id="Error-Failure-while-executing"><a href="#Error-Failure-while-executing" class="headerlink" title="Error: Failure while executing;"></a>Error: Failure while executing;</h3><p>起因：</p>
+<p>通过brew 启动nginx时报错</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 键入命令</span><br>brew services start nginx<br></code></pre></td></tr></table></figure>
+
+<p>报错内容：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">Bootstrap failed: 5: Input/output error<br>Try re-running the <span class="hljs-built_in">command</span> as root <span class="hljs-keyword">for</span> richer errors.<br>Error: Failure <span class="hljs-keyword">while</span> executing; `/bin/launchctl bootstrap gui/501 /Users/heminxin/Library/LaunchAgents/homebrew.mxcl.nginx.plist` exited with 5.<br></code></pre></td></tr></table></figure>
+
+<p>解决：</p>
+<p>直接进入nginx启动脚本目录通过执行nginx脚本启动；也可以使用nginx命令启动</p>
+<h3 id="Error：在访问被代理url部分js时提示【net-ERR-CONTENT-LENGTH-MISMATCH-200-OK-】"><a href="#Error：在访问被代理url部分js时提示【net-ERR-CONTENT-LENGTH-MISMATCH-200-OK-】" class="headerlink" title="Error：在访问被代理url部分js时提示【net::ERR_CONTENT_LENGTH_MISMATCH 200 (OK)】"></a>Error：在访问被代理url部分js时提示【net::ERR_CONTENT_LENGTH_MISMATCH 200 (OK)】</h3><p>错误：</p>
+<p>当访问url链接时，发现内容不能够加载出来，空白页面，打开控制台开发者工具发现js访问200报错net::ERR_CONTENT_LENGTH_MISMATCH 200 (OK)；查看nginx日志会发现提示权限不够，给proxy_temp文件赋权即可</p>
+<p>解决：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 进入nginx运行目录找proxy_temp</span><br><span class="hljs-built_in">cd</span> /opt/homebrew/var/run/nginx<br><span class="hljs-comment"># 赋权</span><br>sudo <span class="hljs-built_in">chmod</span> 777 proxy_temp<br></code></pre></td></tr></table></figure>
+
+<p>再次访问即可打开完整页面</p>
+<h2 id="Nginx相关命令"><a href="#Nginx相关命令" class="headerlink" title="Nginx相关命令"></a>Nginx相关命令</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs sh">nginx -s reopen <span class="hljs-comment">#重启Nginx</span><br><br>nginx -s reload <span class="hljs-comment">#重新加载Nginx配置文件，然后以优雅的方式重启Nginx</span><br><br>nginx -s stop <span class="hljs-comment">#强制停止Nginx服务</span><br><br>killall nginx <span class="hljs-comment">#杀死所有nginx进程  </span><br><br>nginx -s quit <span class="hljs-comment">#优雅地停止Nginx服务（即处理完所有请求后再停止服务）</span><br><br>nginx -t <span class="hljs-comment">#检测配置文件是否有语法错误，然后退出</span><br><br>nginx -v <span class="hljs-comment">#显示版本信息并退出</span><br><br>nginx -V <span class="hljs-comment">#显示版本和配置选项信息，然后退出</span><br><br>nginx -t <span class="hljs-comment">#检测配置文件是否有语法错误，然后退出</span><br><br>nginx -T <span class="hljs-comment">#检测配置文件是否有语法错误，转储并退出</span><br><br>nginx -q <span class="hljs-comment">#在检测配置文件期间屏蔽非错误信息</span><br><br>nginx -?,-h <span class="hljs-comment">#打开帮助信息  </span><br><br>nginx -p prefix <span class="hljs-comment">#设置前缀路径(默认是:/usr/share/nginx/)</span><br><br>nginx -c filename <span class="hljs-comment">#设置配置文件(默认是:/etc/nginx/nginx.conf)</span><br><br>nginx -g directives <span class="hljs-comment">#设置配置文件外的全局指令</span><br><br></code></pre></td></tr></table></figure>
+
+<p>可以通过以上方式进行相关设置</p>
+<p>推荐Nginx开源社区🔗<a target="_blank" rel="noopener" href="https://www.nginx.org.cn/">链接</a></p>
+<div>
+    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
+<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
+<div id="waline"></div>
+  <script>
+    Waline({
+      el: '#waline',
+      serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
+    });
+  </script>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/MacOS/" class="category-chain-item">MacOS</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Mac/">#Mac</a>
+      
+        <a href="/tags/Nginx/">#Nginx</a>
+      
+        <a href="/tags/MacOS/">#MacOS</a>
+      
+        <a href="/tags/M1/">#M1</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>基于Mac配置安装Nginx</div>
+      <div>https://github.com/i-xiaoxin/2022/10/18/基于Mac安装Nginx/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>xiaoxinlore</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/17/%E5%9F%BA%E4%BA%8ECentOS%E7%B3%BB%E7%BB%9FRedis%E4%B8%A4%E7%A7%8D%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F/" title="基于CentOS系统Redis两种安装方式">
+                        <span class="hidden-mobile">基于CentOS系统Redis两种安装方式</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.6.3/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.6.3/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

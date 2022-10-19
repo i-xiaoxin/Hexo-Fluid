@@ -70,7 +70,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/i-xiaoxin/image/master/AOF%E6%B5%81%E7%A8%8B2.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/i-xiaoxin/image/master/AOF3.png">
 <meta property="article:published_time" content="2022-09-26T10:12:02.000Z">
-<meta property="article:modified_time" content="2022-10-17T12:52:56.813Z">
+<meta property="article:modified_time" content="2022-10-17T14:13:20.037Z">
 <meta property="article:author" content="xiaoxinlore">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary_large_image">
@@ -306,7 +306,7 @@
         
         
         
-          197 分钟
+          199 分钟
         
       </span>
     
@@ -433,13 +433,21 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">tar –xvf redis-5.0.0.tar.gz<br></code></pre></td></tr></table></figure>
 
 <p>安装c++环境</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum -y install gcc gcc-c++ kernel-devel<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install gcc-c++<br></code></pre></td></tr></table></figure>
 
 <p>编译（在解压的目录中执行）：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">make<br></code></pre></td></tr></table></figure>
 
 <p>安装（在解压的目录中执行）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">make install<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">make install PREFIX=/usr/local/redis<br></code></pre></td></tr></table></figure>
+
+<p>拷贝并修改配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> /usr/upload/redis-3.0.7/redis.conf /usr/local/redis/bin<br><br><span class="hljs-comment"># 后台启动</span><br> vim /usr/local/redis/bin/redis.conf：<br>               daemonize <span class="hljs-built_in">yes</span><br></code></pre></td></tr></table></figure>
+
+<p>启动和关闭：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#启动</span><br>./redis-server redis.conf<br><span class="hljs-comment">#关闭</span><br>./redis-cli -h 127.0.0.1 -p 6379 shutdown<br></code></pre></td></tr></table></figure>
+
+
 
 <p>（2）安装 Redis</p>
 <p>redis-server，服务器启动命令 客户端启动命令</p>
