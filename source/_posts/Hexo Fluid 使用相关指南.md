@@ -103,8 +103,16 @@ primary default info success warning danger
 
 
 
-
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
+<div>
+    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
+<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
+<div id="waline"></div>
+  <script>
+    Waline({
+      el: '#waline',
+      serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
+    });
+  </script>
 
   <div id="waline"></div>
   <script>
