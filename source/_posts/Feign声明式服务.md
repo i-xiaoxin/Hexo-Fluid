@@ -704,6 +704,7 @@ ribbon:
 
 
 <div>
+    <hr>
     <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
 <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
 <div id="waline"></div>
