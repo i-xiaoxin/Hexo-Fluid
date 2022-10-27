@@ -60,7 +60,20 @@ comment: waline
 
 - `boolean removeAll(Collection<?> c)`:移除此集合的所有也包含在指定集合中的元素
 
-- `boolean retainAll(Collection<?> c)`:移除刺激和的所有不包含在指定集合中的元素(移除非相同的元素,非交集元素)
+- <div>
+    <hr>
+    <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@waline/client@v2/dist/waline.css"
+    />
+    <div id="waline"></div>
+      <script>
+        Waline({
+          el: '#waline',
+          serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
+        });
+      </script>
 
 - `int size()`:返回集合中的元素数量
 
@@ -2415,8 +2428,12 @@ public class CollectionsDemo {
 
 
 <div>
-    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
+<hr>
+<script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@waline/client@v2/dist/waline.css"
+/>
 <div id="waline"></div>
   <script>
     Waline({
@@ -2424,3 +2441,4 @@ public class CollectionsDemo {
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
+

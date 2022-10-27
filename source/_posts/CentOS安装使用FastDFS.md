@@ -275,9 +275,12 @@ vim  /usr/java/nginx/conf/nginx.conf
 \# 可通过`ps -ef | grep nginx`查看nginx是否已启动成功    
 
 <div>
-    <hr>
-    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
+<hr>
+<script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@waline/client@v2/dist/waline.css"
+/>
 <div id="waline"></div>
   <script>
     Waline({

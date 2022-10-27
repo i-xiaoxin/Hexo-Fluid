@@ -1,5 +1,5 @@
 ---
-title: Mysql异常错误处理-Establishing SSL connection without server's identity verification is not recommended. 
+title: Mysql异常错误处理-SSL
 date: 2022-10-15 23:29:02
 tags: 
 - Mysql

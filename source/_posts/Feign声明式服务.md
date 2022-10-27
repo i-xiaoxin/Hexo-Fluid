@@ -704,9 +704,12 @@ ribbon:
 
 
 <div>
-    <hr>
-    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
+<hr>
+<script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@waline/client@v2/dist/waline.css"
+/>
 <div id="waline"></div>
   <script>
     Waline({

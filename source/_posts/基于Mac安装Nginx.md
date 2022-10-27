@@ -201,8 +201,12 @@ nginx -g directives #设置配置文件外的全局指令
 推荐Nginx开源社区🔗[链接](https://www.nginx.org.cn/)
 
 <div>
-    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
+<hr>
+<script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@waline/client@v2/dist/waline.css"
+/>
 <div id="waline"></div>
   <script>
     Waline({
@@ -210,3 +214,4 @@ nginx -g directives #设置配置文件外的全局指令
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
+

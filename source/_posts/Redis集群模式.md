@@ -428,9 +428,12 @@ M: 11a8b9487fc5bc3af3f0e5f5737680b0de2f5ea8 127.0.0.1:30006
 [redis 集群方案的介绍（主从模式、哨兵模式、Redis Cluster模式）](https://blog.51cto.com/u_14032829/3644819)
 
 <div>
-  <hr>
-    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
+<hr>
+<script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@waline/client@v2/dist/waline.css"
+/>
 <div id="waline"></div>
   <script>
     Waline({
@@ -438,4 +441,3 @@ M: 11a8b9487fc5bc3af3f0e5f5737680b0de2f5ea8 127.0.0.1:30006
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
-

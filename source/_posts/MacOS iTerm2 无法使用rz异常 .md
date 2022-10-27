@@ -74,8 +74,12 @@ Parameters:/usr/local/bin/iterm2-recv-zmodem.sh
 参考：[macOS iTerm2无法使用rz并提示waiting-to-receive. **B0100000023be50. _](https://webclown.net/2020/06/19/macOS-iTerm2%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8rz%E5%B9%B6%E6%8F%90%E7%A4%BAwaiting-to-receive%E3%80%90%E8%BD%AC%E3%80%91/)
 
 <div>
-    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
+<hr>
+<script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@waline/client@v2/dist/waline.css"
+/>
 <div id="waline"></div>
   <script>
     Waline({

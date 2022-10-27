@@ -154,4 +154,17 @@ comment: waline
 [^1]: Echarts示例
 [^2]: Echarts-Github
 
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
+<div>
+<hr>
+<script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@waline/client@v2/dist/waline.css"
+/>
+<div id="waline"></div>
+  <script>
+    Waline({
+      el: '#waline',
+      serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
+    });
+  </script>

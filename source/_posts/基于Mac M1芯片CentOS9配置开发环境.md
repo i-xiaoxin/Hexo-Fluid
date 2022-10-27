@@ -1,5 +1,6 @@
 ---
-title: 基于Mac M1芯片CentOS9配置开发环境date: 2022-10-08 21:29:02
+title: 基于Mac M1芯片CentOS9配置开发环境
+date: 2022-10-08 21:29:02
 tags: 
 - Mysql
 - MacOS
@@ -156,8 +157,12 @@ yum -y remove 查出哪个删除哪个
 
 
 <div>
-    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
+<hr>
+<script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@waline/client@v2/dist/waline.css"
+/>
 <div id="waline"></div>
   <script>
     Waline({
@@ -165,3 +170,6 @@ yum -y remove 查出哪个删除哪个
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
+
+  
+

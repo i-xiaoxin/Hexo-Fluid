@@ -771,11 +771,11 @@ PUT /java/course/3
 
 ## 3. field属性的设置标准
 
-| 属性   | 标准       |
-| ------ | ---------- |
-| type   | 是否有意义 |
-| index  | 是否搜索   |
-| source | 是否展示   |
+| 属性   | 标准                                                         |
+| ------ | ------------------------------------------------------------ |
+| type   | <div><hr><script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> <link  rel="stylesheet"  href="https://unpkg.com/@waline/client@v2/dist/waline.css"/><div id="waline"></div>  <script>    Waline({      el: '#waline',      serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',    });  </script> |
+| index  | 是否搜索                                                     |
+| source | 是否展示                                                     |
 
 
 
@@ -1769,9 +1769,12 @@ GET /_cluster/health
 [ES-入门介绍](https://www.yijiyong.com/es/basic/01-intro.html)
 
 <div>
-    <hr>
-    <script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
-<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>  
+<hr>
+<script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@waline/client@v2/dist/waline.css"
+/>
 <div id="waline"></div>
   <script>
     Waline({
