@@ -16,27 +16,26 @@
   <meta name="author" content="xiaoxinlore">
   <meta name="keywords" content="java">
   
-    <meta name="description" content="前提 Mac需要安装Homebrew  配置安装使用brew安装nginx 1brew install nginx  查看nginx的配置信息 1brew info nginx  输出内容如下 12345678910111213141516171819202122232425262728293031nginx: stable 1.23.1 (bottled), HEADHTTP(S) server">
+    <meta name="description" content="基于CentOS arm系统源码方式安装RabbitMQRabbit技术公司基于AMQP标准开发的RabbitMQ1.0发布。RabbitMQ采用Erlang 语言开发。 本次环境为Mac M1虚拟机CentOS9 arm 源码安装ErlangErlang官网地址 Erlang源码Github Dowanload 12345678910111213#yum安装erlang编译所依赖的环境 yum">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于Mac配置安装Nginx">
-<meta property="og:url" content="https://github.com/i-xiaoxin/2022/10/18/%E5%9F%BA%E4%BA%8EMac%E5%AE%89%E8%A3%85Nginx/index.html">
+<meta property="og:title" content="基于CentOS arm系统源码方式安装RabbitMQ">
+<meta property="og:url" content="https://github.com/i-xiaoxin/2022/10/19/%E5%9F%BA%E4%BA%8ECentOS%20arm%E7%B3%BB%E7%BB%9F%E6%BA%90%E7%A0%81%E6%96%B9%E5%BC%8F%E5%AE%89%E8%A3%85RabbitMQ/index.html">
 <meta property="og:site_name" content="xiaoxinlore">
-<meta property="og:description" content="前提 Mac需要安装Homebrew  配置安装使用brew安装nginx 1brew install nginx  查看nginx的配置信息 1brew info nginx  输出内容如下 12345678910111213141516171819202122232425262728293031nginx: stable 1.23.1 (bottled), HEADHTTP(S) server">
+<meta property="og:description" content="基于CentOS arm系统源码方式安装RabbitMQRabbit技术公司基于AMQP标准开发的RabbitMQ1.0发布。RabbitMQ采用Erlang 语言开发。 本次环境为Mac M1虚拟机CentOS9 arm 源码安装ErlangErlang官网地址 Erlang源码Github Dowanload 12345678910111213#yum安装erlang编译所依赖的环境 yum">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-10-18T13:29:02.000Z">
-<meta property="article:modified_time" content="2022-10-27T02:20:45.897Z">
+<meta property="article:published_time" content="2022-10-19T13:29:02.000Z">
+<meta property="article:modified_time" content="2022-10-28T16:36:11.553Z">
 <meta property="article:author" content="xiaoxinlore">
-<meta property="article:tag" content="Mac">
-<meta property="article:tag" content="Nginx">
-<meta property="article:tag" content="MacOS">
-<meta property="article:tag" content="M1">
+<meta property="article:tag" content="CentOS">
+<meta property="article:tag" content="RabbitMQ">
+<meta property="article:tag" content="Erlang">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>基于Mac配置安装Nginx - xiaoxinlore</title>
+  <title>基于CentOS arm系统源码方式安装RabbitMQ - xiaoxinlore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -222,13 +221,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/article3.webp') no-repeat center center; background-size: cover;">
+     style="background: url('/img/article1.webp') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="基于Mac配置安装Nginx"></span>
+            <span id="subtitle" data-typed-text="基于CentOS arm系统源码方式安装RabbitMQ"></span>
           
         </div>
 
@@ -239,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-18 21:29" pubdate>
-          2022年10月18日 晚上
+        <time datetime="2022-10-19 21:29" pubdate>
+          2022年10月19日 晚上
         </time>
       </span>
     
@@ -251,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k 字
+          2k 字
         
       </span>
     
@@ -262,7 +261,7 @@
         
         
         
-          27 分钟
+          17 分钟
         
       </span>
     
@@ -300,48 +299,31 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">基于Mac配置安装Nginx</h1>
+            <h1 style="display: none">基于CentOS arm系统源码方式安装RabbitMQ</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><blockquote>
-<p>Mac需要安装Homebrew</p>
-</blockquote>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用brew安装nginx</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">brew install nginx<br></code></pre></td></tr></table></figure>
+                <h1 id="基于CentOS-arm系统源码方式安装RabbitMQ"><a href="#基于CentOS-arm系统源码方式安装RabbitMQ" class="headerlink" title="基于CentOS arm系统源码方式安装RabbitMQ"></a>基于CentOS arm系统源码方式安装RabbitMQ</h1><p>Rabbit技术公司基于AMQP标准开发的RabbitMQ1.0发布。RabbitMQ采用Erlang 语言开发。</p>
+<p>本次环境为Mac M1虚拟机CentOS9 arm</p>
+<h2 id="源码安装Erlang"><a href="#源码安装Erlang" class="headerlink" title="源码安装Erlang"></a>源码安装Erlang</h2><p><a target="_blank" rel="noopener" href="https://www.erlang-solutions.com/downloads/">Erlang官网地址</a></p>
+<p>Erlang源码<a href="https://github.com/erlang/otp/releases">Github Dowanload</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment">#yum安装erlang编译所依赖的环境 </span><br>yum -y install make gcc gcc-c++ kernel-devel m4ncurses-devel openssl-devel<br><br><span class="hljs-comment"># Erlang 源码下载</span><br>wget https://github.com/erlang/otp/releases/download/OTP-25.1.2/otp_src_25.1.2.tar.gz<br><br>tar -zxvf otp_src_25.1.2.tar.gz<br><span class="hljs-built_in">cd</span> otp_src_25.1.2<br><br><span class="hljs-comment"># 预编译到/usr/local/erlang</span><br>./configure  --prefix=/usr/local/erlang --without-javac<br><span class="hljs-comment"># 安装</span><br>make &amp;&amp; make install<br></code></pre></td></tr></table></figure>
 
-<p>查看nginx的配置信息</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">brew info nginx<br></code></pre></td></tr></table></figure>
+<h2 id="安装RabbitMQ"><a href="#安装RabbitMQ" class="headerlink" title="安装RabbitMQ"></a>安装RabbitMQ</h2><p>RabbitMQ官网<a target="_blank" rel="noopener" href="http://www.rabbitmq.com/download.html">下载地址</a></p>
+<p>源码Github<a href="https://github.com/rabbitmq/rabbitmq-server/releases">下载地址</a></p>
+<p>RabbitMQ 和 Erlang&#x2F;OTP <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/which-erlang.html#compatibility-matrix">兼容性对照表</a>安装前确认一下！</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># rabbitmq-server 源码下载</span><br>wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.10.8/rabbitmq-server-generic-unix-3.10.8.tar.xz<br><br><span class="hljs-comment"># 解压</span><br>xz -d rabbitmq-server-generic-unix-3.10.8.tar.xz<br><span class="hljs-comment"># 注意没有z参数；下载的文件并不是“通过 gzip 过滤归档”所以添加参数z就无法正常解压</span><br>tar -xvf rabbitmq-server-generic-unix-3.10.8.tar<br><br><span class="hljs-comment"># 移动文件到系统目录下</span><br><span class="hljs-built_in">mv</span> rabbitmq-server-generic-unix-3.10.8/ /usr/local/rabbitmq<br></code></pre></td></tr></table></figure>
 
-<p>输出内容如下</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs sh">nginx: stable 1.23.1 (bottled), HEAD<br>HTTP(S) server and reverse proxy, and IMAP/POP3 proxy server<br>https://nginx.org/<br><span class="hljs-comment"># 以下是安装nginx路径</span><br>/opt/homebrew/Cellar/nginx/1.23.1 (26 files, 2.2MB) *<br>  Poured from bottle on 2022-10-18 at 18:00:26<br><span class="hljs-comment"># 安装源</span><br>From: https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/nginx.rb<br>License: BSD-2-Clause<br>==&gt; Dependencies<br>Required: openssl@1.1 ✔, pcre2 ✔<br>==&gt; Options<br>--HEAD<br>	Install HEAD version<br>==&gt; Caveats<br><span class="hljs-comment"># 根目录</span><br>Docroot is: /opt/homebrew/var/www<br><span class="hljs-comment"># 配置路径</span><br>The default port has been <span class="hljs-built_in">set</span> <span class="hljs-keyword">in</span> /opt/homebrew/etc/nginx/nginx.conf to 8080 so that<br>nginx can run without sudo.<br><span class="hljs-comment"># 启动路径</span><br>nginx will load all files <span class="hljs-keyword">in</span> /opt/homebrew/etc/nginx/servers/.<br><br>To restart nginx after an upgrade:<br>  brew services restart nginx<br>Or, <span class="hljs-keyword">if</span> you don<span class="hljs-string">&#x27;t want/need a background service you can just run:</span><br><span class="hljs-string">  /opt/homebrew/opt/nginx/bin/nginx -g daemon off;</span><br><span class="hljs-string">==&gt; Analytics</span><br><span class="hljs-string">install: 29,315 (30 days), 115,535 (90 days), 454,216 (365 days)</span><br><span class="hljs-string">install-on-request: 29,264 (30 days), 115,323 (90 days), 453,381 (365 days)</span><br><span class="hljs-string">build-error: 3 (30 days)</span><br></code></pre></td></tr></table></figure>
+<h2 id="配置系统环境变量"><a href="#配置系统环境变量" class="headerlink" title="配置系统环境变量"></a>配置系统环境变量</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 打开环境变量文件</span><br>vim /etc/profile<br><br><span class="hljs-comment"># 添加erlang rabbitmq 到环境变量</span><br><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/usr/local/erlang/bin<br><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/usr/local/rabbitmq/sbin<br><br><span class="hljs-comment"># 重新加载环境变量</span><br><span class="hljs-built_in">source</span> /etc/profile<br><span class="hljs-comment"># 测试Erlang环境生效</span><br>erl <br>或 erl -v<br><span class="hljs-comment"># 输出内容如下及成功</span><br>Erlang/OTP 25 [erts-13.1.2] [<span class="hljs-built_in">source</span>] [64-bit] [smp:2:2] [ds:2:2:10] [async-threads:1] [jit]<br><br>Eshell V13.1.2  (abort with ^G)<br>1&gt;<br></code></pre></td></tr></table></figure>
 
-<h3 id="brew相关命令"><a href="#brew相关命令" class="headerlink" title="brew相关命令"></a>brew相关命令</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 启动nginx服务</span><br>brew services start nginx <br><span class="hljs-comment"># 重启命令</span><br>brew services restart nginx<br><span class="hljs-comment"># 关闭命令</span><br>brew services stop nginx<br><br><span class="hljs-comment"># 关闭命令提示，不推荐使用</span><br>Stopping `nginx`... (might take a <span class="hljs-keyword">while</span>)<br>==&gt; Successfully stopped `nginx` (label: homebrew.mxcl.nginx)<br><br></code></pre></td></tr></table></figure>
+<h2 id="RabbitMQ相关命令"><a href="#RabbitMQ相关命令" class="headerlink" title="RabbitMQ相关命令"></a>RabbitMQ相关命令</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 开启web界面管理工具</span><br>rabbitmq-plugins <span class="hljs-built_in">enable</span> rabbitmq_management<br><br><span class="hljs-comment"># 启动 可以省略start</span><br>rabbitmq-server start<br><span class="hljs-comment"># 后台启动,两个命令建议第二个</span><br>rabbitmq-server -detached<br>rabbitmqctl start_app<br><span class="hljs-comment"># 停止</span><br>rabbitmq-server stop<br><span class="hljs-comment"># 节点启动后使用这个停止</span><br>rabbitmqctl  stop_app<br></code></pre></td></tr></table></figure>
 
-<h3 id="检验nginx配置文件"><a href="#检验nginx配置文件" class="headerlink" title="检验nginx配置文件"></a>检验nginx配置文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 命令</span><br>sudo /opt/homebrew/Cellar/nginx/1.23.1/bin/nginx -t -c /opt/homebrew/etc/nginx/nginx.conf<br><br><span class="hljs-comment"># 输出信息</span><br>nginx: the configuration file /opt/homebrew/etc/nginx/nginx.conf syntax is ok<br>nginx: configuration file /opt/homebrew/etc/nginx/nginx.conf <span class="hljs-built_in">test</span> is successful<br><br></code></pre></td></tr></table></figure>
+<h2 id="添加远端登录账户"><a href="#添加远端登录账户" class="headerlink" title="添加远端登录账户"></a>添加远端登录账户</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 创建账号</span><br>rabbitmqctl  add_user admin 1111<br><span class="hljs-comment"># 设置用户角色</span><br>rabbitmqctl  set_user_tags admin  administrator<br><span class="hljs-comment"># 设置用户权限</span><br>rabbitmqctl set_permissions -p <span class="hljs-string">&quot;/&quot;</span> admin <span class="hljs-string">&quot;.*&quot;</span> <span class="hljs-string">&quot;.*&quot;</span> <span class="hljs-string">&quot;.*&quot;</span><br><span class="hljs-comment"># 查看当前用户和角色(需要开启服务)</span><br>rabbitmqctl list_users<br></code></pre></td></tr></table></figure>
 
-<h3 id="通过进程关闭Nginx"><a href="#通过进程关闭Nginx" class="headerlink" title="通过进程关闭Nginx"></a>通过进程关闭Nginx</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 获取到nginx的进程</span><br>ps -ef|grep nginx<br><br><span class="hljs-comment"># 输出内容</span><br> 501 74155     1   0  6:05下午 ??         0:00.00 nginx: master process /opt/homebrew/Cellar/nginx/1.23.1/bin/nginx<br>  501 74156 74155   0  6:05下午 ??         0:00.06 nginx: worker process<br>  501 77226 72927   0  6:41下午 ttys002    0:00.00 grep --color=auto --exclude-dir=.bzr --exclude-dir=CVS --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn --exclude-dir=.idea --exclude-dir=.tox nginx<br>  <br><span class="hljs-comment"># 进程结束命令</span><br><span class="hljs-built_in">kill</span> -term 74155<br><br><span class="hljs-comment"># 拓展</span><br><span class="hljs-built_in">kill</span> -QUIT 72 (从容的停止，即不会立刻停止)<br><br>Kill -TERM 72 （立刻停止）<br><br>Kill -INT 72 （和上面一样，也是立刻停止）<br></code></pre></td></tr></table></figure>
-
-<h2 id="解决异常错误"><a href="#解决异常错误" class="headerlink" title="解决异常错误"></a>解决异常错误</h2><h3 id="Error-Failure-while-executing"><a href="#Error-Failure-while-executing" class="headerlink" title="Error: Failure while executing;"></a>Error: Failure while executing;</h3><p>起因：</p>
-<p>通过brew 启动nginx时报错</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 键入命令</span><br>brew services start nginx<br></code></pre></td></tr></table></figure>
-
-<p>报错内容：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">Bootstrap failed: 5: Input/output error<br>Try re-running the <span class="hljs-built_in">command</span> as root <span class="hljs-keyword">for</span> richer errors.<br>Error: Failure <span class="hljs-keyword">while</span> executing; `/bin/launchctl bootstrap gui/501 /Users/heminxin/Library/LaunchAgents/homebrew.mxcl.nginx.plist` exited with 5.<br></code></pre></td></tr></table></figure>
-
-<p>解决：</p>
-<p>直接进入nginx启动脚本目录通过执行nginx脚本启动；也可以使用nginx命令启动</p>
-<h3 id="Error：在访问被代理url部分js时提示【net-ERR-CONTENT-LENGTH-MISMATCH-200-OK-】"><a href="#Error：在访问被代理url部分js时提示【net-ERR-CONTENT-LENGTH-MISMATCH-200-OK-】" class="headerlink" title="Error：在访问被代理url部分js时提示【net::ERR_CONTENT_LENGTH_MISMATCH 200 (OK)】"></a>Error：在访问被代理url部分js时提示【net::ERR_CONTENT_LENGTH_MISMATCH 200 (OK)】</h3><p>错误：</p>
-<p>当访问url链接时，发现内容不能够加载出来，空白页面，打开控制台开发者工具发现js访问200报错net::ERR_CONTENT_LENGTH_MISMATCH 200 (OK)；查看nginx日志会发现提示权限不够，给proxy_temp文件赋权即可</p>
-<p>解决：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 进入nginx运行目录找proxy_temp</span><br><span class="hljs-built_in">cd</span> /opt/homebrew/var/run/nginx<br><span class="hljs-comment"># 赋权</span><br>sudo <span class="hljs-built_in">chmod</span> 777 proxy_temp<br></code></pre></td></tr></table></figure>
-
-<p>再次访问即可打开完整页面</p>
-<h2 id="Nginx相关命令"><a href="#Nginx相关命令" class="headerlink" title="Nginx相关命令"></a>Nginx相关命令</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs sh">nginx -s reopen <span class="hljs-comment">#重启Nginx</span><br><br>nginx -s reload <span class="hljs-comment">#重新加载Nginx配置文件，然后以优雅的方式重启Nginx</span><br><br>nginx -s stop <span class="hljs-comment">#强制停止Nginx服务</span><br><br>killall nginx <span class="hljs-comment">#杀死所有nginx进程  </span><br><br>nginx -s quit <span class="hljs-comment">#优雅地停止Nginx服务（即处理完所有请求后再停止服务）</span><br><br>nginx -t <span class="hljs-comment">#检测配置文件是否有语法错误，然后退出</span><br><br>nginx -v <span class="hljs-comment">#显示版本信息并退出</span><br><br>nginx -V <span class="hljs-comment">#显示版本和配置选项信息，然后退出</span><br><br>nginx -t <span class="hljs-comment">#检测配置文件是否有语法错误，然后退出</span><br><br>nginx -T <span class="hljs-comment">#检测配置文件是否有语法错误，转储并退出</span><br><br>nginx -q <span class="hljs-comment">#在检测配置文件期间屏蔽非错误信息</span><br><br>nginx -?,-h <span class="hljs-comment">#打开帮助信息  </span><br><br>nginx -p prefix <span class="hljs-comment">#设置前缀路径(默认是:/usr/share/nginx/)</span><br><br>nginx -c filename <span class="hljs-comment">#设置配置文件(默认是:/etc/nginx/nginx.conf)</span><br><br>nginx -g directives <span class="hljs-comment">#设置配置文件外的全局指令</span><br><br></code></pre></td></tr></table></figure>
-
-<p>可以通过以上方式进行相关设置</p>
-<p>推荐Nginx开源社区🔗<a target="_blank" rel="noopener" href="https://www.nginx.org.cn/">链接</a></p>
+<p>账号guest具有所有的操作权限，并且又是默认账号，出于安全因素的考虑，guest用户只能通过localhost登陆</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p> 浏览器输入：serverip:15672。其中serverip是RabbitMQ-Server所在主机的ip，15672是RabbitMQ-Server的端口号</p>
+<h2 id="关于rpm安装方式"><a href="#关于rpm安装方式" class="headerlink" title="关于rpm安装方式"></a>关于rpm安装方式</h2><p>使用rpm安装，yum install erlang 与 yum insatll rabbitmq-server提示匹配不到命令，关于CentOS9 arm的没有解决</p>
 <div>
 <hr>
 <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
@@ -356,8 +338,6 @@
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
-
-
                 
               </div>
             
@@ -375,7 +355,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/MacOS/" class="category-chain-item">MacOS</a>
+  <a href="/categories/RabbitMQ/" class="category-chain-item">RabbitMQ</a>
   
   
 
@@ -390,13 +370,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Mac/">#Mac</a>
+        <a href="/tags/CentOS/">#CentOS</a>
       
-        <a href="/tags/Nginx/">#Nginx</a>
+        <a href="/tags/RabbitMQ/">#RabbitMQ</a>
       
-        <a href="/tags/MacOS/">#MacOS</a>
-      
-        <a href="/tags/M1/">#M1</a>
+        <a href="/tags/Erlang/">#Erlang</a>
       
     </div>
   
@@ -408,8 +386,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>基于Mac配置安装Nginx</div>
-      <div>https://github.com/i-xiaoxin/2022/10/18/基于Mac安装Nginx/</div>
+      <div>基于CentOS arm系统源码方式安装RabbitMQ</div>
+      <div>https://github.com/i-xiaoxin/2022/10/19/基于CentOS arm系统源码方式安装RabbitMQ/</div>
     </div>
     <div class="license-meta">
       
@@ -421,7 +399,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月18日</div>
+          <div>2022年10月19日</div>
         </div>
       
       
@@ -453,9 +431,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/19/%E5%9F%BA%E4%BA%8ECentOS%20arm%E7%B3%BB%E7%BB%9F%E6%BA%90%E7%A0%81%E6%96%B9%E5%BC%8F%E5%AE%89%E8%A3%85RabbitMQ/" title="基于CentOS arm系统源码方式安装RabbitMQ">
+                      <a href="/2022/10/19/%E5%9F%BA%E4%BA%8ECentOS%E5%AE%89%E8%A3%85FastDFS/" title="基于CentOS安装FastDFS">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">基于CentOS arm系统源码方式安装RabbitMQ</span>
+                        <span class="hidden-mobile">基于CentOS安装FastDFS</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -463,8 +441,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/17/%E5%9F%BA%E4%BA%8ECentOS%E7%B3%BB%E7%BB%9FRedis%E4%B8%A4%E7%A7%8D%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F/" title="基于CentOS系统Redis两种安装方式">
-                        <span class="hidden-mobile">基于CentOS系统Redis两种安装方式</span>
+                      <a href="/2022/10/18/%E5%9F%BA%E4%BA%8EMac%E5%AE%89%E8%A3%85Nginx/" title="基于Mac配置安装Nginx">
+                        <span class="hidden-mobile">基于Mac配置安装Nginx</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
