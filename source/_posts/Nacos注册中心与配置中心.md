@@ -42,20 +42,6 @@ comment: waline
 
 ### 三、Nacos安装和启动
 
-#### <div>
-<hr>
-<script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/@waline/client@v2/dist/waline.css"
-/>
-<div id="waline"></div>
-  <script>
-    Waline({
-      el: '#waline',
-      serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
-    });
-  </script>
 
 > 从github上选择需要的版本进行[下载](https://github.com/alibaba/nacos/releases)
 
@@ -816,4 +802,3 @@ systemctl status nacos.service   #查询nacos服务状态
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
-
