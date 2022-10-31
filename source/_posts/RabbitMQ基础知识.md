@@ -961,6 +961,127 @@ channel.basicPublish(EXCHANGE_NAME, "item.delete", MessageProperties.PERSISTENT_
 
 推荐阅读[RabbitMQ Tutorials](https://www.rabbitmq.com/getstarted.html)
 
+# Springboot整合RabbitMQ
+
+推荐阅读[Spring AMQP](https://spring.io/projects/spring-amqp)
+
+## 依赖和配置
+
+AMQP的启动器：
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-amqp</artifactId>
+</dependency>
+```
+
+application.yaml
+
+```yaml
+spring:
+  rabbitmq:
+    host: 10.211.55.18 #主机
+    port: 5672         #端口
+    username: admin    #用户名
+    password: 1111     #密码
+    virtual-host: /    #虚拟分组
+```
+
+## AmqpTemplate
+
+Spring最擅长的事情就是封装，把他人的框架进行封装和整合。
+
+Spring为AMQP提供了统一的消息处理模板：AmqpTemplate，非常方便的发送消息，其发送方法：`amqpTemplate.convertAndSend(EXCHANGE_NAME,ROUTING_KEY , msg)`;
+
+参数意义：
+
+- EXCHANGE_NAME 指定交换机、RoutingKey和消息体
+- ROUTING_KEY 指定RoutingKey和消息，会向默认的交换机发送消息
+-  msg  指定消息
+
+## 监听者
+
+在SpringAmqp中，对消息的消费者进行了封装和抽象，一个普通的JavaBean中的普通方法，只要通过简单的注解，就可以成为一个消费者。
+
+```java
+@Component
+public class Listener {
+    /**
+     * 监听者接收消息三要素：
+     *  1、queue
+     *  2、exchange
+     *  3、routing key
+     */
+    @RabbitListener(bindings = @QueueBinding(
+        value = @Queue(value="springboot_queue",durable = "true"),
+        exchange = @Exchange(value="springboot_exchage",type= ExchangeTypes.TOPIC),
+        key= {"*.*"}
+    ))
+    public void listen(String msg){
+        System.out.println("接收到消息：" + msg);
+    }
+}
+```
+
+- `@Componet`：类上的注解，注册到Spring容器
+- `@RabbitListener`：方法上的注解，声明这个方法是一个消费者方法，需要指定下面的属性：
+  - `bindings`：指定绑定关系，可以有多个。值是`@QueueBinding`的数组。`@QueueBinding`包含下面属性：
+    - `value`：这个消费者关联的队列。值是`@Queue`，代表一个队列
+    - `exchange`：队列所绑定的交换机，值是`@Exchange`类型
+    - `key`：队列和交换机绑定的`RoutingKey`
+
+类似listen这样的方法在一个类中可以写多个，就代表多个消费者。
+
+## 整合Demo
+
+### 生产者
+
+```java
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = RabbitMQApp.class)
+public class Sender {
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
+
+    @Test
+    public void testSendMsg() throws InterruptedException {
+        String EXCHANGE_NAME = "springboot_exchange";
+        String ROUTING_KEY = "item";
+        String msg = "hello, Spring boot amqp";
+        amqpTemplate.convertAndSend(EXCHANGE_NAME,ROUTING_KEY , msg);
+        // 等待10秒后再结束
+        Thread.sleep(10000);
+    }
+}
+```
+
+### 消费者
+
+```java
+@Component
+public class Receiver {
+
+    /**
+     * 监听者接收消息三要素：
+     *  1、queue
+     *  2、exchange
+     *  3、routing key
+     */
+    @RabbitListener(bindings = {@QueueBinding(
+            value = @Queue(name="springboot_queue",durable = "true"),
+            exchange = @Exchange(name="springboot_exchange",type= ExchangeTypes.TOPIC),
+            key= {"*.*"}
+    )})
+    public void listen(String msg){
+        System.out.println("接收到消息：" + msg);
+    }
+}
+```
+
+
+
 <div>
 <hr>
 <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
