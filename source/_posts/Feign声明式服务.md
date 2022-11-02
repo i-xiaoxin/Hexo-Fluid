@@ -13,7 +13,6 @@ categories:
 - 微服务
 - Spring Cloud Alibaba
 - Feign
-- HTTPClient
 comment: waline
 ---
 
@@ -717,4 +716,3 @@ ribbon:
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
-

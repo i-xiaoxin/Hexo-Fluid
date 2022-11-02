@@ -8,6 +8,8 @@ tags:
 index_img: 
 banner_img: /img/article3.webp
 categories:
+- 微服务
+- Spring Cloud Alibaba
 - Elasticsearch
 comment: waline
 ---

@@ -1,0 +1,809 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/tab.png">
+  <link rel="icon" href="/img/tab.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="xiaoxinlore">
+  <meta name="keywords" content="java">
+  
+    <meta name="description" content="1. 实现分布式事务在实际系统的开发过程中，可能服务间的调用是异步的。也就是说，一个服务发送一个消息给 MQ，即消息中间件，比如RocketMQ、RabbitMQ、Kafka、ActiveMQ 等等。 然后，另外一个服务从 MQ 消费到一条消息后进行处理。这就成了基于 MQ 的异步调用了。那么针对这种基于 MQ 的异步调用，如何保证各个服务间的分布式事务呢？也就是说，我希望的是基于MQ 实现异步调">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RabbitMQ可靠消息最终一致性">
+<meta property="og:url" content="https://github.com/i-xiaoxin/2022/10/31/RabbitMQ%E5%8F%AF%E9%9D%A0%E6%B6%88%E6%81%AF%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7/index.html">
+<meta property="og:site_name" content="xiaoxinlore">
+<meta property="og:description" content="1. 实现分布式事务在实际系统的开发过程中，可能服务间的调用是异步的。也就是说，一个服务发送一个消息给 MQ，即消息中间件，比如RocketMQ、RabbitMQ、Kafka、ActiveMQ 等等。 然后，另外一个服务从 MQ 消费到一条消息后进行处理。这就成了基于 MQ 的异步调用了。那么针对这种基于 MQ 的异步调用，如何保证各个服务间的分布式事务呢？也就是说，我希望的是基于MQ 实现异步调">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210128223058373.png">
+<meta property="article:published_time" content="2022-10-31T12:29:02.000Z">
+<meta property="article:modified_time" content="2022-11-02T09:14:20.307Z">
+<meta property="article:author" content="xiaoxinlore">
+<meta property="article:tag" content="RabbitMQ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210128223058373.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>RabbitMQ可靠消息最终一致性 - xiaoxinlore</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"github.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>xiaoxinlore</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/article4.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="RabbitMQ可靠消息最终一致性"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-31 20:29" pubdate>
+          2022年10月31日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          94 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">RabbitMQ可靠消息最终一致性</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="1-实现分布式事务"><a href="#1-实现分布式事务" class="headerlink" title="1. 实现分布式事务"></a>1. 实现分布式事务</h1><p>在实际系统的开发过程中，可能服务间的调用是异步的。也就是说，一个服务发送一个消息给 MQ，即消息中间件，比如RocketMQ、RabbitMQ、Kafka、ActiveMQ 等等。</p>
+<p>然后，另外一个服务从 MQ 消费到一条消息后进行处理。这就成了基于 MQ 的异步调用了。那么针对这种基于 MQ 的异步调用，如何保证各个服务间的分布式事务呢？也就是说，我希望的是基于MQ 实现异步调用的多个服务的业务逻辑，要么一起成功，要么一起失败。这个时候，就要用上可靠消息最终一致性方案，来实现分布式事务。</p>
+<h1 id="2-可靠消息最终一致性"><a href="#2-可靠消息最终一致性" class="headerlink" title="2. 可靠消息最终一致性"></a>2. 可靠消息最终一致性</h1><p>可靠消息最终一致性方案是指当事务发起方执行完成本地事务后并发出一条消息，事务参与方(消息消费者)一定能够接收消息并处理事务成功，此方案强调的是只要消息发给事务参与方最终事务要达到一致。</p>
+<p>事务发起方（消息生产方）将消息发给消息中间件，事务参与方从消息中间件接收消息，事务发起方和消息中间件之间，事务参与方（消息消费方）和消息中间件之间都是通过网络通信，由于网络通信的不确定性会导致分布式事务问题。</p>
+<h1 id="3-要解决的问题"><a href="#3-要解决的问题" class="headerlink" title="3. 要解决的问题"></a>3. 要解决的问题</h1><h3 id="3-1-上游服务把信息成功发送"><a href="#3-1-上游服务把信息成功发送" class="headerlink" title="3.1. 上游服务把信息成功发送"></a>3.1. 上游服务把信息成功发送</h3><p><strong>本地事务与消息发送的原子性问题</strong>：事务发起方在本地事务执行成功后消息必须发出去，否则就回滚事务。即实现本地事务和消息发送的原子性，要么都成功，要么都失败。</p>
+<h3 id="3-2-下游服务成把消息成功消费"><a href="#3-2-下游服务成把消息成功消费" class="headerlink" title="3.2. 下游服务成把消息成功消费"></a>3.2. 下游服务成把消息成功消费</h3><p><strong>事务参与方接收消息的可靠性</strong>：事务参与方必须能够从消息队列接收到消息。</p>
+<h3 id="3-3-对消息做幂等"><a href="#3-3-对消息做幂等" class="headerlink" title="3.3. 对消息做幂等"></a>3.3. 对消息做幂等</h3><p><strong>消息重复消费的问题</strong>：由于MQ到消费者之间网络传输的存在，若某一个消费节点响应超时但是消费成功，此时消息中间件会重复投递此消息，就导致了消息的重复消费。</p>
+<h1 id="4-解决方案"><a href="#4-解决方案" class="headerlink" title="4. 解决方案"></a>4. 解决方案</h1><div>
+  <img src="https://img-blog.csdnimg.cn/20210128223058373.png" srcset="/img/loading.gif" lazyload>
+</div>
+
+<h3 id="4-1-问题一：上游服务把消息成功发送"><a href="#4-1-问题一：上游服务把消息成功发送" class="headerlink" title="4.1. 问题一：上游服务把消息成功发送"></a>4.1. 问题一：上游服务把消息成功发送</h3><p>本地消息表：<a target="_blank" rel="noopener" href="http://maofg.site/arch/2018/12/19/arch-ds-async-mq.html">该方案</a>最初是eBay提出的，在系统A处理任务完成后，在本地记录待发送信息。一个<code>定时任务</code>不断检查，是否发送成功，如果发送成功，将记录状态修改。</p>
+<h3 id="4-2-问题二：下游服务成把消息成功消费"><a href="#4-2-问题二：下游服务成把消息成功消费" class="headerlink" title="4.2. 问题二：下游服务成把消息成功消费"></a>4.2. 问题二：下游服务成把消息成功消费</h3><p>消息持久化：可保证消息中间件宕机后消息不丢失</p>
+<p>手动ack：保证消息投递失败时消息的重新投递</p>
+<h3 id="4-3-问题三：对消息做幂等"><a href="#4-3-问题三：对消息做幂等" class="headerlink" title="4.3. 问题三：对消息做幂等"></a>4.3. 问题三：对消息做幂等</h3><p>消息去重表：任务B处理消息前，先查询该消息是否被消费，如果没消费，处理任务B成功，记录消息。如果消息已经被消费，直接返回应答成功</p>
+<p>推荐阅读：</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6953986394549305374">基于RabbitMQ的分布式事务最终一致性解决方案</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Libbo/p/16035775.html">分布式事务：可靠消息最终一致性方案 </a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/forever_and_ever/article/details/98073430">RabbitMQ消息可靠性投递及分布式事务最终一致性实现</a></p>
+<h1 id="5-RabbitMQ实现可靠消息最终一致性"><a href="#5-RabbitMQ实现可靠消息最终一致性" class="headerlink" title="5. RabbitMQ实现可靠消息最终一致性"></a>5. RabbitMQ实现可靠消息最终一致性</h1><p>通过商品信息后台上架添加业务场景实现案例</p>
+<h3 id="5-1-需求说明："><a href="#5-1-需求说明：" class="headerlink" title="5.1 需求说明："></a>5.1 需求说明：</h3><p><strong>shop_item：</strong></p>
+<p>​       1、保存商品信息</p>
+<p>​       2、保存本地消息记录</p>
+<p>​       3、quartz定时向MQ Server发送添加消息</p>
+<p>​       4、在MQ Server响应返回后更新本地消息为已成功发送状态</p>
+<p><strong>shop_search：</strong></p>
+<p>​       1、接收消息，同步到Elasticsearch索引库</p>
+<p>​       2、向MQ Server发送应答状态</p>
+<p>​       3、对同步索引库方法做幂等</p>
+<h3 id="5-2-Mysql数据库创建表"><a href="#5-2-Mysql数据库创建表" class="headerlink" title="5.2 Mysql数据库创建表"></a>5.2 Mysql数据库创建表</h3><p>数据库中新增local_message表，本地消息记录表(初始化状态为发送失败)，用于保证上游服务把消息成功发送。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DROP TABLE IF EXISTS `local_message`;<br>CREATE TABLE `local_message` (<br>  `tx_no` varchar(255) NOT NULL, # 主键<br>  `item_id` bigint DEFAULT NULL, # 商品id<br>  `state` int(11) DEFAULT NULL,  # 0失败，1成功<br>  PRIMARY KEY (`tx_no`)<br>) ENGINE=InnoDB DEFAULT CHARSET=utf8;<br></code></pre></td></tr></table></figure>
+
+<p>在数据库中新增msg_distinct，去重表，用于商品信息幂等控制。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DROP TABLE IF EXISTS `msg_distinct`;<br>CREATE TABLE `msg_distinct` (<br>  `tx_no` varchar(255) NOT NULL,      # 主键<br>  `create_time` datetime DEFAULT NULL,# 创建时间<br>  PRIMARY KEY (`tx_no`)<br>) ENGINE=InnoDB DEFAULT CHARSET=utf8;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="5-3-shop-item"><a href="#5-3-shop-item" class="headerlink" title="5.3 shop_item"></a>5.3 shop_item</h3><h4 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">rabbitmq:</span><br>    <span class="hljs-attr">host:</span> <span class="hljs-number">10.211</span><span class="hljs-number">.55</span><span class="hljs-number">.18</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">5672</span><br>    <span class="hljs-attr">username:</span> <span class="hljs-string">admin</span><br>    <span class="hljs-attr">password:</span> <span class="hljs-number">1111</span><br>    <span class="hljs-attr">virtual-host:</span> <span class="hljs-string">/</span><br>    <span class="hljs-attr">listener:</span><br>      <span class="hljs-attr">simple:</span><br>        <span class="hljs-attr">acknowledge-mode:</span> <span class="hljs-string">manual</span> <span class="hljs-comment">#前两种消息模型不自动ack</span><br>      <span class="hljs-attr">direct:</span><br>        <span class="hljs-attr">acknowledge-mode:</span> <span class="hljs-string">manual</span> <span class="hljs-comment">#后三种消息模型不自动ack</span><br>    <span class="hljs-attr">publisher-returns:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#开启消息退回回调</span><br>    <span class="hljs-attr">publisher-confirm-type:</span> <span class="hljs-string">correlated</span> <span class="hljs-comment">#开启消息确认回调</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="MQSender"><a href="#MQSender" class="headerlink" title="MQSender"></a>MQSender</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.mq;<br><br><span class="hljs-keyword">import</span> com.example.mapper.LocalMessageMapper;<br><span class="hljs-keyword">import</span> com.example.pojo.LocalMessage;<br><span class="hljs-keyword">import</span> com.example.utils.JsonUtils;<br><span class="hljs-keyword">import</span> org.springframework.amqp.core.AmqpTemplate;<br><span class="hljs-keyword">import</span> org.springframework.amqp.core.Message;<br><span class="hljs-keyword">import</span> org.springframework.amqp.rabbit.connection.CorrelationData;<br><span class="hljs-keyword">import</span> org.springframework.amqp.rabbit.core.RabbitTemplate;<br><span class="hljs-keyword">import</span> org.springframework.amqp.rabbit.core.RabbitTemplate.ConfirmCallback;<br><span class="hljs-keyword">import</span> org.springframework.amqp.rabbit.core.RabbitTemplate.ReturnCallback;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;<br><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ItemMQSender</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ReturnCallback</span>, ConfirmCallback&#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> LocalMessageMapper localMessageMapper;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> AmqpTemplate amqpTemplate;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sendMsg</span><span class="hljs-params">(LocalMessage localMessage)</span> &#123;<br>        <span class="hljs-type">RabbitTemplate</span> <span class="hljs-variable">rabbitTemplate</span> <span class="hljs-operator">=</span> (RabbitTemplate) <span class="hljs-built_in">this</span>.amqpTemplate;<br>        <span class="hljs-comment">//调用当前类的回调逻辑</span><br>        rabbitTemplate.setConfirmCallback(<span class="hljs-built_in">this</span>);<span class="hljs-comment">//确认回调</span><br>        rabbitTemplate.setReturnCallback(<span class="hljs-built_in">this</span>);<span class="hljs-comment">//失败回退</span><br><br>        <span class="hljs-comment">//用于确认之后更改本地消息状态或删除本地消息--本地消息id</span><br>        <span class="hljs-type">CorrelationData</span> <span class="hljs-variable">correlationData</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CorrelationData</span>(localMessage.getTxNo());<br>        rabbitTemplate.convertAndSend(<span class="hljs-string">&quot;index_exchange&quot;</span>,<span class="hljs-string">&quot;item.add&quot;</span>,                JsonUtils.objectToJson(localMessage),correlationData);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 失败回调</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">returnedMessage</span><span class="hljs-params">(Message message, <span class="hljs-type">int</span> replyCode, String replyText, String exchange, String routingKey)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;return--message:&quot;</span> + <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(message.getBody())  + <span class="hljs-string">&quot;,exchange:&quot;</span> + exchange + <span class="hljs-string">&quot;,routingKey:&quot;</span> + routingKey);<br>    &#125;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 确认回调，响应业务之后---修改local_message的status</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">confirm</span><span class="hljs-params">(CorrelationData correlationData, <span class="hljs-type">boolean</span> ack, String cause)</span> &#123;<br>        <span class="hljs-keyword">if</span> (ack) &#123;<br>            <span class="hljs-comment">// 消息发送成功,更新本地消息为已成功发送状态或者直接删除该本地消息记录</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">txNo</span> <span class="hljs-operator">=</span> correlationData.getId();<br>            <span class="hljs-type">LocalMessage</span> <span class="hljs-variable">localMessage</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">LocalMessage</span>();<br>            localMessage.setTxNo(txNo);<br>            localMessage.setState(<span class="hljs-number">1</span>);<br>            localMessageMapper.updateByPrimaryKeySelective(localMessage);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="service"><a href="#service" class="headerlink" title="service"></a>service</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">	* 系统a业务</span><br><span class="hljs-comment">	*/</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">insertTbItem</span><span class="hljs-params">(TbItem tbItem, String desc, String itemParams)</span> &#123;<br>    <span class="hljs-comment">//保存商品信息</span><br><br>    <span class="hljs-comment">//保存本地消息记录</span><br>    <span class="hljs-type">LocalMessage</span> <span class="hljs-variable">localMessage</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">LocalMessage</span>();<br>    <span class="hljs-comment">// 设置主键</span><br>    localMessage.setTxNo(UUID.randomUUID().toString());<br>    localMessage.setItemId(itemId);<br>    <span class="hljs-comment">// 设置上游服务消息状态</span><br>    localMessage.setState(<span class="hljs-number">0</span>);<br>    localMessageMapper.insertSelective(localMessage);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.service;<br><br><span class="hljs-keyword">import</span> com.example.mapper.LocalMessageMapper;<br><span class="hljs-keyword">import</span> com.example.pojo.LocalMessage;<br><span class="hljs-keyword">import</span> com.example.pojo.LocalMessageExample;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Service;<br><span class="hljs-keyword">import</span> org.springframework.transaction.annotation.Transactional;<br><br><span class="hljs-keyword">import</span> java.util.List;<br><span class="hljs-meta">@Service</span><br><span class="hljs-meta">@Transactional</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LocalMessageServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">LocalMessageService</span>&#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> LocalMessageMapper localMessageMapper;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> List&lt;LocalMessage&gt; <span class="hljs-title function_">selectlocalMessageByStatus</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">LocalMessageExample</span> <span class="hljs-variable">localMessageExample</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">LocalMessageExample</span>();<br>        LocalMessageExample.<span class="hljs-type">Criteria</span> <span class="hljs-variable">criteria</span> <span class="hljs-operator">=</span> localMessageExample.createCriteria();<br>        criteria.andStateEqualTo(<span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">return</span> localMessageMapper.selectByExample(localMessageExample);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="quartz-job"><a href="#quartz-job" class="headerlink" title="quartz-job"></a>quartz-job</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.quartz;<br><br><span class="hljs-keyword">import</span> com.example.mq.ItemMQSender;<br><span class="hljs-keyword">import</span> com.example.pojo.LocalMessage;<br><span class="hljs-keyword">import</span> com.example.service.LocalMessageService;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;<br><br><span class="hljs-keyword">import</span> java.util.Date;<br><span class="hljs-keyword">import</span> java.util.List;<br><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ItemQuartz</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> LocalMessageService localMessageService;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> ItemMQSender itemMQSender;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 关闭超时订单</span><br><span class="hljs-comment">     * 检查本地消息表</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">scanLocalMessage</span><span class="hljs-params">()</span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;执行扫描本地消息表的任务：&quot;</span> + <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>());<br>        <span class="hljs-comment">// 发送消息：扫描local_message中status是0的记录，并发送消息</span><br>        List&lt;LocalMessage&gt; localMessageList = <br>            		localMessageService.selectlocalMessageByStatus();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; localMessageList.size(); i++) &#123;<br>            <span class="hljs-type">LocalMessage</span> <span class="hljs-variable">localMessage</span> <span class="hljs-operator">=</span> localMessageList.get(i);<br>            itemMQSender.sendMsg(localMessage);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="config"><a href="#config" class="headerlink" title="config"></a>config</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.config;<br><br><span class="hljs-keyword">import</span> com.example.quartz.ItemQuartz;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Bean;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><span class="hljs-keyword">import</span> org.springframework.scheduling.quartz.CronTriggerFactoryBean;<br><span class="hljs-keyword">import</span> org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;<br><span class="hljs-keyword">import</span> org.springframework.scheduling.quartz.SchedulerFactoryBean;<br><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">QuartzConfig</span> &#123;<br><br>    <span class="hljs-comment">//job：做什么事</span><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> MethodInvokingJobDetailFactoryBean <br>           			<span class="hljs-title function_">methodInvokingJobDetailFactoryBean</span><span class="hljs-params">(ItemQuartz itemQuartz)</span> &#123;<br>        <span class="hljs-type">MethodInvokingJobDetailFactoryBean</span> <span class="hljs-variable">JobDetailFactoryBean</span> <span class="hljs-operator">=</span> <br>            							<span class="hljs-keyword">new</span> <span class="hljs-title class_">MethodInvokingJobDetailFactoryBean</span>();<br>        JobDetailFactoryBean.setTargetObject(itemQuartz);<br>        JobDetailFactoryBean.setTargetMethod(<span class="hljs-string">&quot;scanLocalMessage&quot;</span>);<br>        <span class="hljs-keyword">return</span> JobDetailFactoryBean;<br>    &#125;<br><br>    <span class="hljs-comment">//trigger：什么时候做</span><br>    <span class="hljs-meta">@Bean</span><span class="hljs-comment">//trigger（job）</span><br>    <span class="hljs-keyword">public</span> CronTriggerFactoryBean <span class="hljs-title function_">cronTriggerFactoryBean</span><span class="hljs-params">(</span><br><span class="hljs-params">            				MethodInvokingJobDetailFactoryBean JobDetailFactoryBean)</span> &#123;<br>        <span class="hljs-type">CronTriggerFactoryBean</span> <span class="hljs-variable">triggerFactoryBean</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CronTriggerFactoryBean</span>();<br>        triggerFactoryBean.setCronExpression(<span class="hljs-string">&quot;*/1 * * * * ?&quot;</span>);<br>        triggerFactoryBean.setJobDetail(JobDetailFactoryBean.getObject());<br>        <span class="hljs-keyword">return</span> triggerFactoryBean;<br>    &#125;<br><br>    <span class="hljs-comment">//scheduled：什么时候做什么事</span><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> SchedulerFactoryBean <span class="hljs-title function_">schedulerFactoryBean</span><span class="hljs-params">(</span><br><span class="hljs-params">        								CronTriggerFactoryBean triggerFactoryBean)</span> &#123;<br>        <span class="hljs-type">SchedulerFactoryBean</span> <span class="hljs-variable">schedulerFactoryBean</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SchedulerFactoryBean</span>();<br>        schedulerFactoryBean.setTriggers(triggerFactoryBean.getObject());<br>        <span class="hljs-keyword">return</span> schedulerFactoryBean;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-4-shop-search"><a href="#5-4-shop-search" class="headerlink" title="5.4 shop_search"></a>5.4 shop_search</h3><h4 id="application-yml-1"><a href="#application-yml-1" class="headerlink" title="application.yml"></a>application.yml</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">rabbitmq:</span><br>    <span class="hljs-attr">host:</span> <span class="hljs-number">10.211</span><span class="hljs-number">.55</span><span class="hljs-number">.18</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">5672</span><br>    <span class="hljs-attr">username:</span> <span class="hljs-string">admin</span><br>    <span class="hljs-attr">password:</span> <span class="hljs-number">1111</span><br>    <span class="hljs-attr">virtual-host:</span> <span class="hljs-string">/</span><br>    <span class="hljs-attr">listener:</span><br>      <span class="hljs-attr">simple:</span><br>        <span class="hljs-attr">acknowledge-mode:</span> <span class="hljs-string">manual</span> <span class="hljs-comment">#前两种消息模型不自动ack</span><br>      <span class="hljs-attr">direct:</span><br>        <span class="hljs-attr">acknowledge-mode:</span> <span class="hljs-string">manual</span> <span class="hljs-comment">#后三种消息模型不自动ack</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="service-1"><a href="#service-1" class="headerlink" title="service"></a>service</h4><h5 id="SearchItemServiceImpl"><a href="#SearchItemServiceImpl" class="headerlink" title="SearchItemServiceImpl"></a>SearchItemServiceImpl</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">insertDocument</span><span class="hljs-params">(Long itemId)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>    <span class="hljs-comment">// 1、根据商品id查询商品信息。</span><br>    <span class="hljs-type">SearchItem</span> <span class="hljs-variable">searchItem</span> <span class="hljs-operator">=</span> searchItemMapper.getItemById(itemId);<br><br>    <span class="hljs-comment">//2、添加商品到索引库</span><br>    <span class="hljs-type">IndexRequest</span> <span class="hljs-variable">indexRequest</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IndexRequest</span>(ES_INDEX_NAME, ES_TYPE_NAME);<br>    indexRequest.source(JsonUtils.objectToJson(searchItem), XContentType.JSON);<br>    restHighLevelClient.index(indexRequest);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="MsgDistinctServiceImpl"><a href="#MsgDistinctServiceImpl" class="headerlink" title="MsgDistinctServiceImpl"></a>MsgDistinctServiceImpl</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.service;<br><br><span class="hljs-keyword">import</span> com.example.mapper.MsgDistinctMapper;<br><span class="hljs-keyword">import</span> com.example.pojo.MsgDistinct;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Service;<br><span class="hljs-keyword">import</span> org.springframework.transaction.annotation.Transactional;<br><br><span class="hljs-keyword">import</span> java.util.Date;<br><br><span class="hljs-meta">@Service</span><br><span class="hljs-meta">@Transactional</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MsgDistinctServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">MsgDistinctService</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> MsgDistinctMapper msgDistinctMapper;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> MsgDistinct <span class="hljs-title function_">selectMsgDistinctByTxNo</span><span class="hljs-params">(String txNo)</span> &#123;<br>        <span class="hljs-keyword">return</span> msgDistinctMapper.selectByPrimaryKey(txNo);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">insertMsgDistinct</span><span class="hljs-params">(String txNo)</span> &#123;<br>        <span class="hljs-type">MsgDistinct</span> <span class="hljs-variable">msgDistinct</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MsgDistinct</span>();<br>        msgDistinct.setTxNo(txNo);<br>        msgDistinct.setCreateTime(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>());<br>        msgDistinctMapper.insertSelective(msgDistinct);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="listener"><a href="#listener" class="headerlink" title="listener"></a>listener</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.listener;<br><br><span class="hljs-keyword">import</span> com.example.pojo.LocalMessage;<br><span class="hljs-keyword">import</span> com.example.pojo.MsgDistinct;<br><span class="hljs-keyword">import</span> com.example.service.MsgDistinctService;<br><span class="hljs-keyword">import</span> com.example.service.SearchItemService;<br><span class="hljs-keyword">import</span> com.example.utils.JsonUtils;<br><span class="hljs-keyword">import</span> com.rabbitmq.client.Channel;<br><span class="hljs-keyword">import</span> org.springframework.amqp.core.ExchangeTypes;<br><span class="hljs-keyword">import</span> org.springframework.amqp.core.Message;<br><span class="hljs-keyword">import</span> org.springframework.amqp.rabbit.annotation.Exchange;<br><span class="hljs-keyword">import</span> org.springframework.amqp.rabbit.annotation.Queue;<br><span class="hljs-keyword">import</span> org.springframework.amqp.rabbit.annotation.QueueBinding;<br><span class="hljs-keyword">import</span> org.springframework.amqp.rabbit.annotation.RabbitListener;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;<br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SearchMQListener</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> MsgDistinctService msgDistinctService;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> SearchItemService searchItemService;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 监听者接收消息三要素：</span><br><span class="hljs-comment">     *  1、queue </span><br><span class="hljs-comment">     *  2、exchange 默认持久化</span><br><span class="hljs-comment">     *  3、routing key</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@RabbitListener(bindings = @QueueBinding(</span><br><span class="hljs-meta">            value = @Queue(value=&quot;index_queue&quot;,durable = &quot;true&quot;),</span><br><span class="hljs-meta">            exchange = @Exchange(value=&quot;index_exchange&quot;,type= ExchangeTypes.TOPIC),</span><br><span class="hljs-meta">            key= &#123;&quot;item.*&quot;&#125;</span><br><span class="hljs-meta">    ))</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">listen</span><span class="hljs-params">(String msg, Channel channel, Message message)</span><br>            <span class="hljs-keyword">throws</span> IOException &#123;<br>        System.out.println(<span class="hljs-string">&quot;接收到消息：&quot;</span> + msg);<br>        <span class="hljs-type">LocalMessage</span> <span class="hljs-variable">localMessage</span> <span class="hljs-operator">=</span> JsonUtils.jsonToPojo(msg, LocalMessage.class);<br><br>        <span class="hljs-comment">//进行幂等判断，防止ack应为网络问题没有送达，导致扣减库存业务重复执行</span><br>        <span class="hljs-type">MsgDistinct</span> <span class="hljs-variable">msgDistinct</span> <span class="hljs-operator">=</span><br>                msgDistinctService.selectMsgDistinctByTxNo(localMessage.getTxNo());<br>        <span class="hljs-keyword">if</span>(msgDistinct==<span class="hljs-literal">null</span>)&#123;<br>            searchItemService.insertDocument(localMessage.getItemId());<br>            <span class="hljs-comment">//记录成功执行过的事务</span><br>            msgDistinctService.insertMsgDistinct(localMessage.getTxNo());<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            System.out.println(<span class="hljs-string">&quot;=======幂等生效：事务&quot;</span>+msgDistinct.getTxNo()<br>                    +<span class="hljs-string">&quot; 已成功执行===========&quot;</span>);<br>        &#125;<br>     channel.basicAck(message.getMessageProperties().getDeliveryTag(),<span class="hljs-literal">false</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><ol>
+<li>关闭RabbitMQ，添加商品，再开启RabbitMQ，观察local_message表的status</li>
+<li>关闭下游服务的手动ack，观察消息是否具有幂等</li>
+<li>测试正常添加商品，观察索引库是否同步</li>
+</ol>
+<div>
+<hr>
+<script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script> 
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@waline/client@v2/dist/waline.css"
+/>
+<div id="waline"></div>
+  <script>
+    Waline({
+      el: '#waline',
+      serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
+    });
+  </script>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" class="category-chain-item">微服务</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/Spring-Cloud-Alibaba/" class="category-chain-item">Spring Cloud Alibaba</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/Spring-Cloud-Alibaba/RabbitMQ/" class="category-chain-item">RabbitMQ</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/RabbitMQ/">#RabbitMQ</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>RabbitMQ可靠消息最终一致性</div>
+      <div>https://github.com/i-xiaoxin/2022/10/31/RabbitMQ可靠消息最终一致性/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>xiaoxinlore</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月31日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/29/RabbitMQ%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="RabbitMQ基础知识">
+                        <span class="hidden-mobile">RabbitMQ基础知识</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.6.3/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.6.3/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

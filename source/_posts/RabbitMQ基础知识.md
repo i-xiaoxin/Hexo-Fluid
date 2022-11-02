@@ -7,6 +7,8 @@ tags:
 index_img: 
 banner_img: /img/article8.webp
 categories:
+- 微服务
+- Spring Cloud Alibaba
 - RabbitMQ
 comment: waline
 ---
