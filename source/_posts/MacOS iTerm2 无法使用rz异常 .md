@@ -1,5 +1,5 @@
 ---
-title: MacOS iTerm2 无法使用rz异常 
+title: iTerm2无法使用rz异常 
 date: 2022-10-15 21:29:02
 tags: 
 - Mac
