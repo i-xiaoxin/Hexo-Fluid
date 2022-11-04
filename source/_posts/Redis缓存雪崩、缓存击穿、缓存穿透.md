@@ -46,7 +46,7 @@ Redis可提供针对事件流的连续查询（continuous query）处理技术�
 
 **缓存穿透**是指<font color=red>缓存和数据库中都没有数据</font>，而用户不断发起请求则这些<font color=red>请求会穿过缓存直接访问数据库</font>，如发起为id为“-1”的数据或id为特别大不存在的数据。假如有恶意攻击，就可以利用这个漏洞，对数据库造成压力，甚至压垮数据库。
 
-<img src="https://img-blog.csdnimg.cn/img_convert/b7031182f770a7a5b3c82eaf749f53b0.png" style="zoom: 60%;" >
+<img src="https://img-blog.csdnimg.cn/img_convert/b7031182f770a7a5b3c82eaf749f53b0.png" style="zoom: 60% margin: 0 auto;" >
 
 ### 解决方案
 
@@ -131,7 +131,7 @@ Redis可提供针对事件流的连续查询（continuous query）处理技术�
 
 缓存击穿，是指一个key非常热点，在不停的扛着大并发，大并发集中<font color=red>对一个key不停进行访问，当这个key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库</font>，就像在一个屏障上凿开了一个洞。
 
-<img src="https://img-blog.csdnimg.cn/img_convert/acb5f4e7ef24a524a53c39eb016f63d4.png" style="zoom:60%;" >
+<img src="https://img-blog.csdnimg.cn/img_convert/acb5f4e7ef24a524a53c39eb016f63d4.png" style="zoom:60% margin: 0 auto;" >
 
 ### 解决方案
 
@@ -271,3 +271,4 @@ SETNX_LOCK_PARAM: SETNX_LOCK_PARAM
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
+
