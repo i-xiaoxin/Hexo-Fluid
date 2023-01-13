@@ -1,5 +1,5 @@
 ---
-title: Rredis集群模式测试
+title: Redis集群模式测试
 date: 2022-10-21 22:09:02
 tags: 
 - Redis Cluster

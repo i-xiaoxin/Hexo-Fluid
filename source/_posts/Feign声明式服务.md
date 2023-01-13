@@ -285,8 +285,11 @@ public Object invoke(Object[] argv) throws Throwable {
 
 ## 六、Fegin接口三种传参方式
 
--  当参数比较复杂时，Feign即使声明为get请求也会强行使用post请求
+- 当参数比较复杂时，Feign即使声明为get请求也会强行使用post请求
+
 - 不支持@GetMapping类似注解声明请求，需使用@RequestMapping(value = "url",method = RequestMethod.GET)
+
+  > 当feigin接口中使用@GetMapping时，可在接口中@SpringQueryMap替代@RequestBody 完成get请求，同时注意在provide提供端将@RequestBody注解去掉，两个注解只能保留一个，否则调用会产生http*异常错误，意味着生产端无法使用接口；
 
 ### 1. ？拼接方式传参
 
@@ -716,4 +719,3 @@ ribbon:
       serverURL: 'https://vercel-project-4d7haxk1c-i-xiaoxin.vercel.app',
     });
   </script>
-
